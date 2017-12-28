@@ -3,23 +3,19 @@ import { Modal } from 'antd';
 
 class BaseComponent extends React.Component{
 
-    constructor(){
-        super();
-        //用户表单的输入
-        this.$onInput = (name)=>{
-            return (event)=>{
-                const target = event.target;
-                const value = target.type === 'checkbox' ? target.checked : target.value;
-                // const name = target.name;
-                this.setState({
-                    [name]: value
-                });
-            }
+    $onInput = (name)=>{
+        return (event)=>{
+            const target = event.target;
+            const value = target.type === 'checkbox' ? target.checked : target.value;
+            // const name = target.name;
+            this.setState({
+                [name]: value
+            });
         }
     }
 
     // 用于向用户展示友好的提示信息
-    $toast(msg){
+    $toast = (msg)=>{
         // //暂时使用log
         // console.log(msg);
 
@@ -30,7 +26,7 @@ class BaseComponent extends React.Component{
     }
 
     // 用于向用户展示友好的报错
-    $toastError(msg){
+    $toastError = (msg)=>{
         // //暂时使用error
         // console.error(msg);
 
