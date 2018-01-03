@@ -4,12 +4,22 @@
 
 
 .table-header{
+  overflow-x: auto;
+
   .header-item {
-    display: inline-block;
+    float: left;
     margin: 5px;
 
     &.input{
       width: 10em;
     }
+  }
+}
+
+.table-footer{
+ @extend .table-header;
+
+  .footer-item{
+    @extend .header-item;
   }
 }
