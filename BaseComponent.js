@@ -20,9 +20,12 @@ class BaseComponent extends React.Component{
         // //暂时使用log
         // console.log(msg);
 
-        Modal.success({
-            content: msg,
-        });
+        return new Promise((resolve,rejct)=>{
+            let modal = Modal.success({
+                content: msg,
+                onOk:()=>{modal.destroy();resolve();}
+            });
+        })
         // setTimeout(() => modal.destroy(), 1000);
     }
 
@@ -37,20 +40,20 @@ class BaseComponent extends React.Component{
         // setTimeout(() => modal.destroy(), 1000);
     }
 
-
+    // loading相关
     $load = (name)=>{
-        let loadings = this.state.loadings || new Set();
-        loadings.add(name);
+        let __loadings__ = this.state.__loadings__ || new Set();
+        __loadings__.add(name);
         this.setState({
-            loadings:loadings
+            __loadings__:__loadings__
         })
     }
 
     $cancel(name){
-        let loadings = this.state.loadings || new Set();
-        loadings.delete(name);
+        let __loadings__ = this.state.__loadings__ || new Set();
+        __loadings__.delete(name);
         this.setState({
-            loadings:loadings
+            __loadings__:__loadings__
         })
     }
 
@@ -58,10 +61,26 @@ class BaseComponent extends React.Component{
     // <Button type='primary' loading={this.$isLoading('submitForget')}>提交</Button>
 
     $isLoading(name){
-        let loadings = this.state.loadings || new Set();
-        return loadings.has(name);
+        let __loadings__ = this.state.__loadings__ || new Set();
+        return __loadings__.has(name);
     }
 
+    //Modal 相关
+    $showModal(type){
+        this.setState({
+            __modalType__:type||true
+        })
+    }
+
+    $getModalType(){
+        return this.state.__modalType__!==undefined;
+    }
+
+    $closeModal(){
+        this.setState({
+            __modalType__:undefined
+        })
+    }
 }
 
 export default BaseComponent;
