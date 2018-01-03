@@ -1,0 +1,15 @@
+.ant-btn + .ant-btn{
+  margin-left: 10px;
+}
+
+
+.table-header{
+  .header-item {
+    display: inline-block;
+    margin: 5px;
+
+    &.input{
+      width: 10em;
+    }
+  }
+}
