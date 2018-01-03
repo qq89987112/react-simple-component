@@ -1,11 +1,11 @@
 import React from "react";
-import { Modal } from 'antd';
+import {Modal} from 'antd';
 
-class BaseComponent extends React.Component{
+class BaseComponent extends React.Component {
 
 
-    $onInput = (name)=>{
-        return (event)=>{
+    $onInput = (name) => {
+        return (event) => {
             const target = event.target;
             const value = target.type === 'checkbox' ? target.checked : target.value;
             // const name = target.name;
@@ -16,21 +16,24 @@ class BaseComponent extends React.Component{
     }
 
     // 用于向用户展示友好的提示信息
-    $toast = (msg)=>{
+    $toast = (msg) => {
         // //暂时使用log
         // console.log(msg);
 
-        return new Promise((resolve,rejct)=>{
+        return new Promise((resolve, rejct) => {
             let modal = Modal.success({
                 content: msg,
-                onOk:()=>{modal.destroy();resolve();}
+                onOk: () => {
+                    modal.destroy();
+                    resolve();
+                }
             });
         })
         // setTimeout(() => modal.destroy(), 1000);
     }
 
     // 用于向用户展示友好的报错
-    $toastError = (msg)=>{
+    $toastError = (msg) => {
         // //暂时使用error
         // console.error(msg);
 
@@ -41,44 +44,59 @@ class BaseComponent extends React.Component{
     }
 
     // loading相关
-    $load = (name)=>{
+    $load = (name) => {
         let __loadings__ = this.state.__loadings__ || new Set();
         __loadings__.add(name);
         this.setState({
-            __loadings__:__loadings__
+            __loadings__: __loadings__
         })
     }
 
-    $cancel(name){
+    $cancel = (name) => {
         let __loadings__ = this.state.__loadings__ || new Set();
         __loadings__.delete(name);
         this.setState({
-            __loadings__:__loadings__
+            __loadings__: __loadings__
         })
     }
 
     // 可以用来做 ant button 的 loading 绑定
     // <Button type='primary' loading={this.$isLoading('submitForget')}>提交</Button>
 
-    $isLoading(name){
+    $isLoading(name) {
         let __loadings__ = this.state.__loadings__ || new Set();
         return __loadings__.has(name);
     }
 
-    //Modal 相关
-    $showModal(type){
+//  ===========Modal 相关===========
+    __onResult__ = () =>{}
+
+    $showModal = (type) => {
         this.setState({
-            __modalType__:type||true
+            __modalType__: type || true
+        })
+        return new Promise((resolve, reject) => {
+            this.__onResult__ = (result) => {
+                resolve(result);
+                this.__onResult__ = ()=>{}
+            }
         })
     }
 
-    $getModalType(){
-        return this.state.__modalType__!==undefined;
+    $setModalResult = (result) => {
+        this.__onResult__(result);
+        // 为了方便使用confirmLoading就不自动关闭modal
+        // this.$closeModal();
     }
 
-    $closeModal(){
+    //潜意识地告诉使用者我拿type做modalShow
+    $isModalShow = () => {
+        return this.state.__modalType__ ;
+    }
+
+    $closeModal = () => {
         this.setState({
-            __modalType__:undefined
+            __modalType__: undefined
         })
     }
 }
