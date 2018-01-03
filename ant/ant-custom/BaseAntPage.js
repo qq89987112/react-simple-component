@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal} from 'antd';
 
-class BaseComponent extends React.Component {
+class BaseAntPage extends React.Component {
 
 
     $onInput = (name) => {
@@ -37,6 +37,7 @@ class BaseComponent extends React.Component {
         // //暂时使用error
         // console.error(msg);
 
+
         Modal.error({
             content: msg,
         });
@@ -67,38 +68,6 @@ class BaseComponent extends React.Component {
         let __loadings__ = this.state.__loadings__ || new Set();
         return __loadings__.has(name);
     }
-
-//  ===========Modal 相关===========
-    __onResult__ = () =>{}
-
-    $showModal = (type) => {
-        this.setState({
-            __modalType__: type || true
-        })
-        return new Promise((resolve, reject) => {
-            this.__onResult__ = (result) => {
-                resolve(result);
-                this.__onResult__ = ()=>{}
-            }
-        })
-    }
-
-    $setModalResult = (result) => {
-        this.__onResult__(result);
-        // 为了方便使用confirmLoading就不自动关闭modal
-        // this.$closeModal();
-    }
-
-    //潜意识地告诉使用者我拿type做modalShow
-    $isModalShow = () => {
-        return this.state.__modalType__ ;
-    }
-
-    $closeModal = () => {
-        this.setState({
-            __modalType__: undefined
-        })
-    }
 }
 
-export default BaseComponent;
+export default BaseAntPage;
