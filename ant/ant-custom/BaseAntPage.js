@@ -15,6 +15,9 @@ class BaseAntPage extends React.Component {
         }
     }
 
+
+
+
     // 用于向用户展示友好的提示信息
     $toast = (msg) => {
         // //暂时使用log
@@ -48,7 +51,7 @@ class BaseAntPage extends React.Component {
     $load = (name) => {
         let __loadings__ = this.state.__loadings__ || new Set();
         __loadings__.add(name);
-        this.setState({
+        return this.setState({
             __loadings__: __loadings__
         })
     }
@@ -56,7 +59,7 @@ class BaseAntPage extends React.Component {
     $cancel = (name) => {
         let __loadings__ = this.state.__loadings__ || new Set();
         __loadings__.delete(name);
-        this.setState({
+        return this.setState({
             __loadings__: __loadings__
         })
     }
