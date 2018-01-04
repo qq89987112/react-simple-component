@@ -49,11 +49,15 @@ class BaseAntPage extends React.Component {
 
     // loading相关
     $load = (name) => {
-        let __loadings__ = this.state.__loadings__ || new Set();
-        __loadings__.add(name);
-        return this.setState({
-            __loadings__: __loadings__
-        })
+        let
+            __loadings__ = this.state.__loadings__ || new Set(),
+            __loaded__ = this.__loaded__ = this.__loaded__ || new Set();
+
+            __loaded__.add(name);
+            __loadings__.add(name);
+            return this.setState({
+                __loadings__: __loadings__
+            })
     }
 
     $cancel = (name) => {
