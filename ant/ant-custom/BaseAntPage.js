@@ -51,21 +51,32 @@ class BaseAntPage extends React.Component {
     $load = (name) => {
         let
             __loadings__ = this.state.__loadings__ || new Set(),
-            __loaded__ = this.__loaded__ = this.__loaded__ || new Set();
+            __loaded__ = this.__loaded__ = this.__loaded__ || new Set(),
+            names = [].concat(name);
+            names.forEach(name=>__loaded__.add(name)&&__loadings__.add(name))
 
-            __loaded__.add(name);
-            __loadings__.add(name);
             return this.setState({
                 __loadings__: __loadings__
             })
     }
 
+    $isLoaded = (name)=>{
+        let
+            __loaded__ = this.__loaded__ = this.__loaded__ || new Set(),
+            names = [].concat(name);
+
+        return names.every(name=>__loaded__.has(name))
+    }
+
     $cancel = (name) => {
-        let __loadings__ = this.state.__loadings__ || new Set();
-        __loadings__.delete(name);
-        return this.setState({
-            __loadings__: __loadings__
-        })
+        let
+            __loadings__ = this.state.__loadings__ || new Set(),
+            names = [].concat(name);
+
+            names.forEach(name=>__loadings__.delete(name));
+            return this.setState({
+                __loadings__: __loadings__
+            })
     }
 
     // 可以用来做 ant button 的 loading 绑定
