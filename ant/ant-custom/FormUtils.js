@@ -1,38 +1,38 @@
-class FormUtils{
+class FormUtils {
 
-    constructor(form){
+    constructor(form) {
         this.form = form;
 
-        // To disabled submit button at the beginning.
-    }
-
-    hasErrors(fieldsError) {
-        return Object.keys(fieldsError||{}).some(field => fieldsError[field]);
-    }
-    help(name) {
-        const
-            {getFieldError, isFieldTouched} = this.form,
-            isTouched = isFieldTouched(name),
-            error = getFieldError(name);
-
-        // 后面的  || '' 必须加不然不正常
-        return {
-            hasFeedback:true,
-            validateStatus: (isTouched && (error ? 'error' : 'success')) || '',
-            help: (isTouched&&error) || ''
+        // 记得规则上加上 required: true
+        this.hasErrors = (fields) => {
+            let fieldsError = this.getFieldsError(fields);
+            return Object.keys(fieldsError || {}).some(field => fieldsError[field]);
         }
-    }
-    getFieldDecorator(...params){
-        return this.form.getFieldDecorator(...params);
-    }
-    getFieldsError(...params){
-        return this.form.getFieldsError(...params);
+        this.help = (name) => {
+            const
+                {getFieldError, isFieldTouched} = this.form,
+                isTouched = isFieldTouched(name),
+                error = getFieldError(name);
+
+            // 后面的  || '' 必须加不然不正常
+            return {
+                hasFeedback: true,
+                validateStatus: (isTouched && (error ? 'error' : 'success')) || '',
+                help: (isTouched && error) || ''
+            }
+        }
+        Object.entries(this.form).forEach((item) => {
+            let
+                key = item[0],
+                value = item[1];
+
+            if (this.form.hasOwnProperty(key) && !(key in this)) {
+                this[key] = value;
+            }
+        })
     }
 
-    //放在componentDidMount中用于初始化Button。
-    validateFields(...params){
-        return this.form.validateFields(...params);
-    }
+
 }
 
 export default FormUtils;
