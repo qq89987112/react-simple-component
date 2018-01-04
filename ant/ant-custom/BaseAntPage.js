@@ -83,8 +83,11 @@ class BaseAntPage extends React.Component {
     // <Button type='primary' loading={this.$isLoading('submitForget')}>提交</Button>
 
     $isLoading(name) {
-        let __loadings__ = this.state.__loadings__ || new Set();
-        return __loadings__.has(name);
+        let
+            __loadings__ = this.state.__loadings__ || new Set(),
+            names = [].concat(name);
+
+        return names.every(name=>__loadings__.has(name));
     }
 }
 

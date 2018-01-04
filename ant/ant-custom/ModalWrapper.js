@@ -5,47 +5,7 @@ import BaseAntPage from "./BaseAntPage";
 
 // 使用方式为
 // this.$showModal(({resolve,reject,params,form})=><div></div>).then((result)=>{})
-class ModalWrapper extends React.Component {
-
-    // loading相关
-    $load = (name) => {
-        let
-            __loadings__ = this.state.__loadings__ || new Set(),
-            __loaded__ = this.__loaded__ = this.__loaded__ || new Set(),
-            names = [].concat(name);
-        names.forEach(name=>__loaded__.add(name)&&__loadings__.add(name))
-
-        return this.setState({
-            __loadings__: __loadings__
-        })
-    }
-
-    $isLoaded = (name)=>{
-        let
-            __loaded__ = this.__loaded__ = this.__loaded__ || new Set(),
-            names = [].concat(name);
-
-        return names.every(name=>__loaded__.has(name))
-    }
-
-    $cancel = (name) => {
-        let
-            __loadings__ = this.state.__loadings__ || new Set(),
-            names = [].concat(name);
-
-        names.forEach(name=>__loadings__.delete(name));
-        return this.setState({
-            __loadings__: __loadings__
-        })
-    }
-
-    // 可以用来做 ant button 的 loading 绑定
-    // <Button type='primary' loading={this.$isLoading('submitForget')}>提交</Button>
-
-    $isLoading(name) {
-        let __loadings__ = this.state.__loadings__ || new Set();
-        return __loadings__.has(name);
-    }
+class ModalWrapper extends BaseAntPage {
 
     state = {
         children: undefined,
@@ -54,19 +14,31 @@ class ModalWrapper extends React.Component {
 
     static instance;
 
-    static $getInstance = ()=>{
-        if(!ModalWrapper.instance){
-            let div = document.createElement('div');
+    static $new = () => {
+        let
+            div = document.createElement('div'),
+            instance;
+
             document.body.appendChild(div);
-            ModalWrapper.instance = ReactDOM.render(React.createElement(ModalWrapper,{footer:null}), div);
+            instance = ReactDOM.render(React.createElement(ModalWrapper, {footer: null}), div);
+            instance.__div__ = div;
+            return instance;
+    }
+
+    static $getInstance = () => {
+        if (!ModalWrapper.instance) {
+            ModalWrapper.instance = ModalWrapper.$new();
         }
         return ModalWrapper.instance;
     }
 
-    static $close = (...params)=>{
+    static $close = (...params) => {
         return ModalWrapper.$getInstance().close(...params);
     }
 
+    static $showNew = (...params)=>{
+        return ModalWrapper.$new().show(...params);
+    }
 
     static $show = (...params) => {
         return ModalWrapper.$getInstance().show(...params);
@@ -74,7 +46,7 @@ class ModalWrapper extends React.Component {
 
     show = (reactNodeFunc, params = {}) => {
         return new Promise((resolve, reject) => {
-            this.modalContentFun = ()=>reactNodeFunc({
+            this.modalContentFun = () => reactNodeFunc({
                 resolve,
                 reject,
                 //params, // showModal时传过来的。 reactNode就跟在show后面.....
@@ -88,15 +60,27 @@ class ModalWrapper extends React.Component {
         });
     }
 
-    modalContentFun = ()=>{}
+    modalContentFun = () => {
+    }
 
-    close = (clear = true) => {
+    close = ({destory = false, clear = true}) => {
         this.setState({
             visible: false
         });
-        clear&&(this.modalContentFun = ()=>{});
-    }
+        clear && (this.modalContentFun = () => {});
 
+        if(destory){
+            let div = this.__div__;
+
+            const unmountResult = ReactDOM.unmountComponentAtNode(div);
+            if (unmountResult && div.parentNode) {
+                div.parentNode.removeChild(div);
+                if(ModalWrapper.instance === this){
+                    ModalWrapper.instance = null;
+                }
+            }
+        }
+    }
 
 
     render() {
