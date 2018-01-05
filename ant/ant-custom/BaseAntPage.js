@@ -1,8 +1,10 @@
 import React from "react";
 import {Modal} from 'antd';
+import ApiUtils from "../../js/api/Utils";
 
 class BaseAntPage extends React.Component {
 
+    apiUtils = new ApiUtils(this)
 
     $onInput = (name) => {
         return (event) => {
