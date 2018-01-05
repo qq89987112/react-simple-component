@@ -63,7 +63,7 @@ class ModalWrapper extends BaseAntPage {
     modalContentFun = () => {
     }
 
-    close = ({destory = false, clear = true}) => {
+    close = ({destory = false, clear = true} = {}) => {
         this.setState({
             visible: false
         });
