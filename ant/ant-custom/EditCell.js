@@ -7,7 +7,7 @@ const
 class EditCell extends React.Component {
 
     render() {
-        let { editable, value} = this.props;
+        let { editable, children:value} = this.props;
         return (
             <div>
                 {
