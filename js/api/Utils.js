@@ -1,3 +1,5 @@
+import borrow from "./borrow";
+
 class ApiUtils {
 
     constructor(context) {
@@ -25,6 +27,19 @@ class ApiUtils {
         return wrapper
     }
 
+
+    // 不推荐使用。当需要用到 getWrapedWidthLoading 时,应将函数集中初始化,如
+    // const borrowList = apiUtils.wrapWidthLoading(borrow.borrowList, 'borrowList', 'borrowList');
+    // borrowList().then(() => this.setState({
+    //       borrowPagi: {
+    //           total: 50,
+    //           onChange: (page, pageSize) => setTimeout(() => borrowList(page, pageSize), 0)
+    //       },
+    //       borrowQuery:(...params)=>{
+    //         borrowList(params);
+    //       }
+    //     })
+    // )
     getWrapedWidthLoading(apiFunc){
         return this.wrapLoadingCache.get(apiFunc);
     }
