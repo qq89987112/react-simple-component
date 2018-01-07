@@ -1,5 +1,3 @@
-import borrow from "./borrow";
-
 class ApiUtils {
 
     constructor(context) {
