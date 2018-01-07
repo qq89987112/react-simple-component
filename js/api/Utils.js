@@ -10,17 +10,17 @@ class ApiUtils {
         const
             self = this.context,
             wrapper = (...params) => {
-                self.$load(loadingName);
-                return apiFunc(...params).then((data) => {
-                    self.setState({
-                        [stateName]: data
-                    })
-                    self.$cancel(loadingName);
-                    return data;
-                });
-            };
+            self.$load(loadingName);
+            return apiFunc(...params).then((data) => {
+                self.setState({
+                [stateName]: data
+            })
+            self.$cancel(loadingName);
+            return data;
+        });
+        };
 
-            this.wrapLoadingCache.set(apiFunc, wrapper);
+        this.wrapLoadingCache.set(apiFunc, wrapper);
 
         return wrapper
     }
@@ -33,9 +33,11 @@ class ApiUtils {
     //           total: 50,
     //           onChange: (page, pageSize) => setTimeout(() => borrowList(page, pageSize), 0)
     //       },
-    //       borrowQuery:(...params)=>{
-    //         borrowList(params);
-    //       }
+    //         borrowQuery:(...params2)=>{
+    //             const _borrowList = borrowList;
+    //             borrowList = (...params1)=>_borrowList(...params1,...params2);
+    //             borrowList(1,this.page);
+    //         }
     //     })
     // )
     getWrapedWidthLoading(apiFunc){
