@@ -4,16 +4,33 @@ import ApiUtils from "../../js/api/Utils";
 
 class BaseAntPage extends React.Component {
 
+    state = {}
+    page = 10
     apiUtils = new ApiUtils(this)
 
-    $onInput = (name) => {
+    __form_value__ = {}
+    $onInput = (name,realTime) => {
         return (event) => {
             const target = event.target;
             const value = target.type === 'checkbox' ? target.checked : target.value;
             // const name = target.name;
-            this.setState({
-                [name]: value
-            });
+            if(realTime){
+                this.setState({
+                    [name]: value
+                });
+            }else{
+                this.__form_value__[name] = value;
+            }
+
+
+        }
+    }
+
+    $getInputValue = (name,realTime)=>{
+        if(realTime){
+            return this.state[name];
+        }else{
+            return this.__form_value__[name];
         }
     }
 
