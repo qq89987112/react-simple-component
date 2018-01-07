@@ -14,15 +14,7 @@ class BaseAntPage extends React.Component {
             const target = event.target;
             const value = target.type === 'checkbox' ? target.checked : target.value;
             // const name = target.name;
-            if(realTime){
-                this.setState({
-                    [name]: value
-                });
-            }else{
-                this.__form_value__[name] = value;
-            }
-
-
+            this.$setInputValue(name,value,realTime)
         }
     }
 
@@ -31,6 +23,16 @@ class BaseAntPage extends React.Component {
             return this.state[name];
         }else{
             return this.__form_value__[name];
+        }
+    }
+
+    $setInputValue = (name,value,realTime)=>{
+        if(realTime){
+            this.setState({
+                [name]: value
+            });
+        }else{
+            this.__form_value__[name] = value;
         }
     }
 
