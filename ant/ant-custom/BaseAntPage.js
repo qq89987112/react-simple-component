@@ -35,11 +35,20 @@ $getAllInputValue = (realTime)=>{
 }
 
 $setInputValue = (name,value,realTime)=>{
+    let existence;
     if(realTime){
+        existence = this.state[name];
+        if(existence){
+            value = [].concat(existence);
+        }
         this.setState({
             [name]: value
         });
     }else{
+        existence = this.__form_value__[name];
+        if(existence){
+            value = [].concat(existence);
+        }
         this.__form_value__[name] = value;
     }
 }
