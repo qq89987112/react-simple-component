@@ -54,8 +54,8 @@ show = (reactNodeFunc) => {
         render,
         onShow,
         params = {
-            resolve,
-            reject,
+            // resolve, // 这个resolve是必须关闭时调用才行(已放入关闭函数),因为 show.then 跟的then是关闭后的回调。且同一个实例只能show一个
+            // reject,
             //params, // showModal时传过来的。 reactNode就跟在show后面.....
             // form: {},  // 供modal里的表单使用,方便resolve result,而不是把相关变量放在父组件中。
             instance: this // from 可以合并到这里
@@ -72,7 +72,8 @@ show = (reactNodeFunc) => {
 
 
     onShow(params);
-    this.contentRender = ()=>render(params)
+    this.contentRender = ()=>render(params);
+    this.resolve = resolve;
     this.setState({
         visible: true
     })
@@ -82,9 +83,11 @@ show = (reactNodeFunc) => {
 contentRender = () => {}
 
 close = ({destory = false, clear = true} = {}) => {
+    let resolve = this.resolve;
     this.setState({
         visible: false
     });
+    resolve&&resolve();
     clear && (this.contentRender = () => {
     });
 

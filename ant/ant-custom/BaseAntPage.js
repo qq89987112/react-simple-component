@@ -10,12 +10,27 @@ class BaseAntPage extends React.Component {
 
     __form_value__ = {}
     $onInput = (name,realTime) => {
-    return (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    // const name = target.name;
-    this.$setInputValue(name,value,realTime)
-}
+    const type = Object.prototype.toString.call(name);
+    switch (type){
+    case "[object String]":
+        return (event) => {
+            const target = event.target;
+            const value = target.type === 'checkbox' ? target.checked : target.value;
+            // const name = target.name;
+            this.$setInputValue(name,value,realTime)
+        }
+    case "[object Function]":
+        return (event) => {
+            const target = event.target;
+            const value = target.type === 'checkbox' ? target.checked : target.value;
+            // const name = target.name;
+            name(value)
+        }
+        break;
+    default:
+        break;
+    }
+
 }
 
 $getInputValue = (name,realTime)=>{
