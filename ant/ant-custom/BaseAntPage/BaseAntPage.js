@@ -1,6 +1,6 @@
 import React from "react";
 import {Modal} from 'antd';
-import ApiUtils from "../../js/api/Utils";
+import ApiUtils from "../../../js/api/Utils";
 
 class BaseAntPage extends React.Component {
 
