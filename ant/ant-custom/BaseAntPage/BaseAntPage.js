@@ -1,6 +1,6 @@
 import React from "react";
 import {Modal} from 'antd';
-import ApiUtils from "../../../js/api/Utils";
+import ApiUtils from "../../js/api/Utils";
 
 class BaseAntPage extends React.Component {
 
@@ -9,15 +9,15 @@ class BaseAntPage extends React.Component {
     apiUtils = new ApiUtils(this)
 
     __form_value__ = {}
-    $onInput = (name,realTime) => {
+    $onInput = (name, realTime) => {
     const type = Object.prototype.toString.call(name);
-    switch (type){
+    switch (type) {
     case "[object String]":
         return (event) => {
             const target = event.target;
             const value = target.type === 'checkbox' ? target.checked : target.value;
             // const name = target.name;
-            this.$setInputValue(name,value,realTime)
+            this.$setInputValue(name, value, realTime)
         }
     case "[object Function]":
         return (event) => {
@@ -33,42 +33,28 @@ class BaseAntPage extends React.Component {
 
 }
 
-$getInputValue = (name,realTime)=>{
-    if(realTime){
-        return this.state[name];
-    }else{
-        return this.__form_value__[name];
+$getInputValue = (name, realTime) => {
+    const
+        names = [].concat(name),
+        form = realTime ? this.state : this.__form_value__;
+    if (name) {
+        return names.map(name => form[name]).filter(i => i)
+    }
+    else {
+        return form;
     }
 }
 
-$getAllInputValue = (realTime)=>{
-    if(realTime){
-        return this.state;
-    }else{
-        return this.__form_value__;
-    }
-}
 
-$setInputValue = (name,value,realTime)=>{
-    let existence;
-    if(realTime){
-        existence = this.state[name];
-        if(existence){
-            value = [].concat(existence);
-        }
+$setInputValue = (name, value, realTime) => {
+    if (realTime) {
         this.setState({
             [name]: value
         });
-    }else{
-        existence = this.__form_value__[name];
-        if(existence){
-            value = [].concat(existence);
-        }
+    } else {
         this.__form_value__[name] = value;
     }
 }
-
-
 
 
 // 用于向用户展示友好的提示信息
@@ -106,19 +92,19 @@ $load = (name) => {
         __loadings__ = this.state.__loadings__ || new Set(),
         __loaded__ = this.__loaded__ = this.__loaded__ || new Set(),
         names = [].concat(name);
-    names.forEach(name=>__loaded__.add(name)&&__loadings__.add(name))
+    names.forEach(name => __loaded__.add(name) && __loadings__.add(name))
 
     return this.setState({
         __loadings__: __loadings__
     })
 }
 
-$isLoaded = (name)=>{
+$isLoaded = (name) => {
     let
         __loaded__ = this.__loaded__ = this.__loaded__ || new Set(),
         names = [].concat(name);
 
-    return names.every(name=>__loaded__.has(name))
+    return names.every(name => __loaded__.has(name))
 }
 
 $cancel = (name) => {
@@ -126,7 +112,7 @@ $cancel = (name) => {
         __loadings__ = this.state.__loadings__ || new Set(),
         names = [].concat(name);
 
-    names.forEach(name=>__loadings__.delete(name));
+    names.forEach(name => __loadings__.delete(name));
     return this.setState({
         __loadings__: __loadings__
     })
@@ -140,7 +126,7 @@ $isLoading(name) {
         __loadings__ = this.state.__loadings__ || new Set(),
         names = [].concat(name);
 
-    return names.every(name=>__loadings__.has(name));
+    return names.every(name => __loadings__.has(name));
 }
 }
 
