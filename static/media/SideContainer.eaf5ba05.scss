@@ -1,0 +1,34 @@
+.side-container {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  .side-menu{
+    .anticon{
+      font-size: 16px;
+      display: inline-block;
+      margin-right: 20px;
+      &:before{
+        font-family: 'iconfont'!important;
+      }
+    }
+  }
+  .side-content-header{
+    background-color: #fff;
+    text-align: right;
+  }
+  .side-content-wrapper{
+    overflow-y: auto;
+    padding: 20px 10px;
+    height: 100%;
+    background-color: #f4f4f4;
+
+    .side-content{
+      background-color: #fff;
+      padding: 20px;
+    }
+  }
+}

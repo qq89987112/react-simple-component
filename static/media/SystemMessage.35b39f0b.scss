@@ -1,0 +1,30 @@
+.system-msg-page {
+  position: relative;
+  height: 100%;
+  .ant-spin-nested-loading, .ant-spin-container {
+    height: 100%;
+    .content {
+      height: 100%;
+      overflow-y: auto;
+
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+
+        .sign-read {
+          margin-left: 20px;
+        }
+      }
+
+
+    }
+
+  }
+
+  .pagination {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  /**/
+}
