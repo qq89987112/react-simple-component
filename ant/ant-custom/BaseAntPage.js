@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal} from 'antd';
 import ApiUtils from "../../js/api/Utils";
-import {FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 
 class BaseAntPage extends React.Component {
 
@@ -10,21 +10,21 @@ class BaseAntPage extends React.Component {
     apiUtils = new ApiUtils(this)
 
 
-    $f = (id,defaultMessage='')=>{
+    $f = (id, defaultMessage = '') => {
     // export 时,
-    return <FormattedMessage id={id} defaultMessage={defaultMessage} />;
+    return <FormattedMessage id={id} defaultMessage={defaultMessage}/>;
 }
 
 // 当使用ModalWrapper打开、且封装成组件时，将获取不到context里的intl所需内容，需要通过props把$2提供出来。
 // 可以尽量不抽取出组件
-$f2 = (id,defaultMessage='')=>{
+$f2 = (id, defaultMessage = '') => {
     // import PropTypes from "prop-types"
     // import { injectIntl } from 'react-intl';
     //  static propTypes = {
     //     intl: PropTypes.object.isRequired,
     // }
     // export default injectIntl(ProjectManager);
-    return this.props.intl.formatMessage({id,defaultMessage});
+    return this.props.intl.formatMessage({id, defaultMessage});
 }
 
 
@@ -59,7 +59,11 @@ $getInputValue = (name, realTime) => {
         names = [].concat(name),
         form = realTime ? this.state : this.__form_value__;
     if (name) {
-        return names.reduce((prev,name) => form[name]&&(prev[name] = form[name]),{})
+        return names.reduce((prev, name) => {
+            form[name] && (prev[name] = form[name])
+            return prev
+        }, {}
+    )
     }
     else {
         return form;
