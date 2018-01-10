@@ -4,7 +4,15 @@ const
     FormItem = Form.Item;
 
 class FormUtils {
-
+//     formUtils = new FormUtils(this.props.form);
+//     const BaseForm = Form.create()(LoginForm);
+//
+//     class Login extends React.Component {
+//     render() {
+//         return <BaseForm {...this.props}/>
+//     }
+// };
+// export default Login
 
 
     constructor(form) {
@@ -29,15 +37,17 @@ class FormUtils {
             }
         }
 
-        this.getFieldDecoratorEx = ({field,rules,type,label})=>{
-            return     <FormItem label={label}
-            {...this.help(field)}
-        >
-            {
-                this.getFieldDecorator(field, {rules: rules})(<Input
-                type={type}/>)
+        this.getFieldDecoratorEx = ({field,rules=[],label,formItemParams={}})=>{
+            return  (input)=>{
+                return <FormItem label={label}
+                {...formItemParams}
+                {...this.help(field)}
+            >
+                {
+                    this.getFieldDecorator(field, {rules: rules})(input)
+                }
+            </FormItem>
             }
-        </FormItem>
         }
 
         Object.entries(this.form).forEach((item) => {
