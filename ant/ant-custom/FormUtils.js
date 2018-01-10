@@ -1,4 +1,11 @@
+import React from "react";
+import {Form,Input} from "antd";
+const
+    FormItem = Form.Item;
+
 class FormUtils {
+
+
 
     constructor(form) {
         this.form = form;
@@ -21,15 +28,27 @@ class FormUtils {
                 help: (isTouched && error) || ''
             }
         }
+
+        this.getFieldDecoratorEx = ({field,rules,type,label})=>{
+            return     <FormItem label={label}
+            {...this.help(field)}
+        >
+            {
+                this.getFieldDecorator(field, {rules: rules})(<Input
+                type={type}/>)
+            }
+        </FormItem>
+        }
+
         Object.entries(this.form).forEach((item) => {
             let
                 key = item[0],
-                value = item[1];
+            value = item[1];
 
-            if (this.form.hasOwnProperty(key) && !(key in this)) {
-                this[key] = value;
-            }
-        })
+        if (this.form.hasOwnProperty(key) && !(key in this)) {
+            this[key] = value;
+        }
+    })
     }
 
 
