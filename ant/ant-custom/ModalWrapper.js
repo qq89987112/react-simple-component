@@ -61,7 +61,7 @@ class ModalWrapper extends BaseAntPage {
                     //params, // showModal时传过来的。 reactNode就跟在show后面.....
                     // form: {},  // 供modal里的表单使用,方便resolve result,而不是把相关变量放在父组件中。
                     instance: this // from 可以合并到这里
-                };;
+                };
 
                 if(type==='[object Function]'){
                     render = reactNodeFunc;
