@@ -1,6 +1,6 @@
 import React from "react";
 import {Modal} from 'antd';
-import ApiUtils from "../../js/api/Utils";
+import ApiUtils from "../js/api/Utils";
 import {FormattedMessage} from 'react-intl';
 
 class BaseAntPage extends React.Component {
@@ -77,34 +77,6 @@ class BaseAntPage extends React.Component {
     }
 
 
-    // 用于向用户展示友好的提示信息
-    $toast = (msg) => {
-        // //暂时使用log
-        // console.log(msg);
-
-        return new Promise((resolve, rejct) => {
-            let modal = Modal.success({
-                content: msg,
-                onOk: () => {
-                    modal.destroy();
-                    resolve();
-                }
-            });
-        })
-        // setTimeout(() => modal.destroy(), 1000);
-    }
-
-    // 用于向用户展示友好的报错
-    $toastError = (msg) => {
-        // //暂时使用error
-        // console.error(msg);
-
-
-        Modal.error({
-            content: msg,
-        });
-        // setTimeout(() => modal.destroy(), 1000);
-    }
 
     // loading相关
     $load = (name) => {
