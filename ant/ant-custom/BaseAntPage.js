@@ -15,8 +15,8 @@ class BaseAntPage extends React.Component {
         return <FormattedMessage id={id} defaultMessage={defaultMessage}/>;
     }
 
-    // 当使用ModalWrapper打开、且封装成组件时，将获取不到context里的intl所需内容，需要通过props把$2提供出来。并且只能全部使用$f2。
-    // 可以尽量不抽取出组件
+    // 尽量不使用$f2的情况：抽出组建时尽量使用$f,必须使用$f2的情况是 ModalWrapper打开、且封装成组件时,通过参数传递$f2;
+    // 尽量使用$f2的情况： 当使用ModalWrapper配合箭头函数打开一个对话框时,尽量使用this.$f2
     $f2 = (id, defaultMessage = '') => {
         // import PropTypes from "prop-types"
         // import { injectIntl } from 'react-intl';
