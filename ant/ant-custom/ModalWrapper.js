@@ -86,12 +86,12 @@ class ModalWrapper extends BaseAntPage {
 
     close = ({destory = false, clear = true} = {}) => {
         let resolve = this.resolve;
+        clear && (this.contentRender = () => {
+        });
         this.setState({
             visible: false
         });
         resolve&&resolve();
-        clear && (this.contentRender = () => {
-        });
 
         if (destory) {
             let div = this.__div__;

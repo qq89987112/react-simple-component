@@ -10,19 +10,23 @@ class ApiUtils {
         const
             self = this.context,
             wrapper = (...params) => {
-            self.$load(loadingName);
-            return apiFunc(...params).then((data) => {
-                self.setState({
-                [stateName]: data
-            })
-            self.$cancel(loadingName);
-            return data;
-        });
-        };
+                self.$load(loadingName);
+                return apiFunc(...params).then((data) => {
+                    self.setState({
+                        [stateName]: data
+                    })
+                    self.$cancel(loadingName);
+                    return data;
+                });
+            };
 
-        this.wrapLoadingCache.set(apiFunc, wrapper);
+            this.wrapLoadingCache.set(apiFunc, wrapper);
 
         return wrapper
+    }
+
+    wrapWithLoadMore(){
+
     }
 
 
