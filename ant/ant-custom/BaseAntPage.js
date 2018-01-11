@@ -9,22 +9,17 @@ class BaseAntPage extends React.Component {
     page = 10
     apiUtils = new ApiUtils(this)
 
-
+    // 多语言的语言库制作思路：先分词，然后可能出现频率高的放在前面，然后用 . 拼接分词，然后排序。如 请输入邮箱 = email.placeholder 。这样的好处是结构清晰，想词容易。
     $f = (id, defaultMessage = '') => {
-        // export 时,
-        return <FormattedMessage id={id} defaultMessage={defaultMessage}/>;
-    }
-
-    // 尽量不使用$f2的情况：抽出组建时尽量使用$f,必须使用$f2的情况是 ModalWrapper打开、且封装成组件时,通过参数传递$f2;
-    // 尽量使用$f2的情况： 当使用ModalWrapper配合箭头函数打开一个对话框时,尽量使用this.$f2
-    $f2 = (id, defaultMessage = '') => {
         // import PropTypes from "prop-types"
         // import { injectIntl } from 'react-intl';
         //  static propTypes = {
         //     intl: PropTypes.object.isRequired,
         // }
         // export default injectIntl(ProjectManager);
-        return this.props.intl.formatMessage({id, defaultMessage});
+
+        //BaseAntPage.$f2 = this.props.intl.formatMessage;
+        return BaseAntPage.formatMessage({id, defaultMessage}) || this.props.intl.formatMessage({id, defaultMessage});
     }
 
 
