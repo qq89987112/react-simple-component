@@ -12,8 +12,8 @@ class ApiUtils {
             wrapper = (...params) => {
                 self.$load(loadingName);
                 return apiFunc(...params).then((data) => {
-                    self.setState({
-                        [stateName]: data
+                    stateName&&self.setState({
+                        [stateName]: data.data
                     })
                     self.$cancel(loadingName);
                     return data;

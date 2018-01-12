@@ -1,21 +1,30 @@
 import React from 'react';
-import logo from '../logo.svg';
+import {Table} from 'antd';
 import './App.css';
+import common from "../js/api/common";
+import TableComponent from "../components/TableComponent";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+class App extends TableComponent {
+    componentWillMount() {
+        const tableUtils = this.tableUtils;
+        tableUtils.wrapApi(common.table,"users")
+    }
+
+    render() {
+        return (
+            <div>
+                <Table
+                    columns={[
+                        {title:'姓名',dataIndex:"a"},
+                        {title:'年龄',dataIndex:"a"},
+                    ]}
+                    dataSource={this.state.users}
+                    loading={this.$isLoading("users")}
+                    pagination={this.state.usersPagi}
+                />
+            </div>
+        );
+    }
 }
 
 export default App;

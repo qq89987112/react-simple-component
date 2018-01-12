@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import "./assets"
+import "./js"
 import Router from './views';
 import registerServiceWorker from './registerServiceWorker';
 
