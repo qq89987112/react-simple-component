@@ -25,8 +25,40 @@ class ApiUtils {
         return wrapper
     }
 
-    wrapWithLoadMore(){
+    wrapWithLoadMore(apiFunc,{ rows = 10,params} = {}){
+        let
+            _page = 1,
+            _isLoaded = false,
+            _params = params;
 
+        return {
+            reLoad(params) {
+                _page = 1;
+                _isLoaded = false;
+                _params = params || _params;
+                return apiFunc(_page, rows, _params);
+            },
+            // 这个主要功能是当通过筛选reLoad后,保存筛选条件进行分页
+            loadPage(page){
+                return apiFunc(page, rows, _params);
+            },
+            loadNext() {
+                return _isLoaded && Promise.reject({msg: "全部加载完成"}) ||
+
+                    apiFunc(++_page, rows, _params).then((data) => {
+                        data = data.data;
+                        if (data && data.length === 0) {
+                            _isLoaded = true;
+                            return Promise.reject({msg: "全部加载完成"});
+                        }
+                        return data;
+                    });
+            },
+            //  并不需要,直接loadNext拿到报错即可
+            // isLoaded(){
+            //   return _isLoaded;
+            // }
+        }
     }
 
 
