@@ -14,7 +14,19 @@ class FormUtils {
 // };
 // export default Login
 
-
+    static  formItemLayout(multiple=0){
+        const offset = multiple*2;
+        return {
+            labelCol: {
+                xs: { span: 6+offset },
+                sm: { span: 3+offset  },
+            },
+            wrapperCol: {
+                xs: { span: 24+offset},
+                sm: { span: 16+offset},
+            },
+        }
+    }
     constructor(form) {
         this.form = form;
 

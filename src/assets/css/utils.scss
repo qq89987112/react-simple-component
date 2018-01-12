@@ -4,6 +4,11 @@
 .fl{
   float: left;
 }
+
+//在父盒子上可以按钮居中
+.tac{
+  text-align: center;
+}
 .vertical-center{
   position: relative;
   top: 50%;
