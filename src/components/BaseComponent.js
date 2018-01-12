@@ -1,9 +1,7 @@
 import React from "react";
-import {Modal} from 'antd';
 import ApiUtils from "../js/api/Utils";
-import {FormattedMessage} from 'react-intl';
 
-class BaseAntPage extends React.Component {
+class BaseComponent extends React.Component {
 
     state = {}
     page = 10
@@ -19,7 +17,7 @@ class BaseAntPage extends React.Component {
         // export default injectIntl(ProjectManager);
 
         //BaseAntPage.$f2 = this.props.intl.formatMessage;
-        return BaseAntPage.formatMessage({id, defaultMessage}) || this.props.intl.formatMessage({id, defaultMessage});
+        return BaseComponent.formatMessage({id, defaultMessage}) || this.props.intl.formatMessage({id, defaultMessage});
     }
 
 
@@ -122,4 +120,4 @@ class BaseAntPage extends React.Component {
     }
 }
 
-export default BaseAntPage;
+export default BaseComponent;

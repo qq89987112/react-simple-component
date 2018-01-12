@@ -1,0 +1,51 @@
+.fr{
+  float: right;
+}
+.fl{
+  float: left;
+}
+.vertical-center{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.horizontal-center{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 向左右浮动的时候，同时解决 IE6 下的双边距问题 */
+/*.left {
+	float:left;
+	*display:inline;
+}
+.right {
+	float:right;
+	*display:inline;
+}
+*/
+
+
+
+
+/*文字超出*/
+.ellipsis{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+/* 不需要用空标签的 clearfix，用于内部包含浮动 */
+.clearfix:before, .clearfix:after {
+  content:"";
+  display:table;
+}
+.clearfix:after {
+  clear:both;
+}
+.clearfix {
+  *zoom:1;
+}

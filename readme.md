@@ -4,6 +4,8 @@
 
 # react的网页报错点击后可以在webstorm中打开相应位置。。。。
 
+# webstorm中运行一直处于compile请换git bash运行一次查看报错。
+
 
 # 最佳实践
 ## $onInput
