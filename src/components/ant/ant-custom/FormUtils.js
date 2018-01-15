@@ -1,5 +1,6 @@
 import React from "react";
 import {Form,Input} from "antd";
+import validator from "../../js/validator";
 const
     FormItem = Form.Item;
 
@@ -49,6 +50,7 @@ class FormUtils {
             }
         }
 
+        // formUtils.getFieldDecoratorEx({field:"password",rules: validator.password,label:"密码"})( <Input type="password"/>)
         this.getFieldDecoratorEx = ({field,rules=[],label,formItemParams={}})=>{
             return  (input)=>{
                 return <FormItem label={label}

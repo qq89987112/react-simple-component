@@ -1,33 +1,32 @@
-import {FormattedMessage} from "react-intl"
 import React from "react";
 
 export default {
     password: [
         {
             required: true,
-            message: <FormattedMessage id='Login.errors.empty_pwd' />
-},
-{
-    min: 6,
-        message: <FormattedMessage id='Login.errors.error_pwd' />
-}],
-account: [
-    {
-        required: true,
-        message: <FormattedMessage id='Login.errors.empty_account' />
-},
-{
-    min: 2,
-        message: <FormattedMessage id='Login.errors.error_account' />
-}],
-email: [
-    {
-        required: true,
-        message: <FormattedMessage id='Login.errors.empty_email' />
-},
-{
-    type: 'email',
-        message: <FormattedMessage id='Login.errors.error_email' />
-}
-]
+            message: "请输入密码！"
+        },
+        {
+            min: 6,
+            message: "密码格式不正确！"
+        }],
+    account: [
+        {
+            required: true,
+            message: "请输入账号！"
+        },
+        {
+            min: 2,
+            message: "账号格式不正确！"
+        }],
+    email: [
+        {
+            required: true,
+            message: "请输入邮箱！"
+        },
+        {
+            type: 'email',
+            message: "邮箱格式不正确！"
+        }
+    ]
 }
