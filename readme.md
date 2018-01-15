@@ -6,6 +6,16 @@
 
 # webstorm中运行一直处于compile请换git bash运行一次查看报错。
 
+# 打包 paths.js 
+  function getServedPath(appPackageJson) {
+  const publicUrl = getPublicUrl(appPackageJson);
+  const servedUrl =
+      envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : './');  // 这里 './' 改为 '/'
+    return ensureSlash(servedUrl, true);
+  }
+
+  想放在子目录下，还需要使用hashHistory
+
 
 # 最佳实践
 ## $onInput
