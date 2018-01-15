@@ -51,6 +51,18 @@ class FormUtils {
         }
 
         // formUtils.getFieldDecoratorEx({field:"password",rules: validator.password,label:"密码"})( <Input type="password"/>)
+
+        // class LoginForm extends BaseComponent {
+        //     formUtils = new FormUtils(this.props.form);
+        // }
+//         const BaseForm = Form.create()(LoginForm);
+//
+//         class Login extends React.Component {
+//             render() {
+//                 return <BaseForm {...this.props}/>
+//             }
+//         };
+//         export default Login
         this.getFieldDecoratorEx = ({field,rules=[],label,formItemParams={}})=>{
             return  (input)=>{
                 return <FormItem label={label}
