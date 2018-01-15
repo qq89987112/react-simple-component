@@ -1,6 +1,5 @@
 import React from "react";
 import {Form,Input} from "antd";
-import validator from "../../js/validator";
 const
     FormItem = Form.Item;
 
