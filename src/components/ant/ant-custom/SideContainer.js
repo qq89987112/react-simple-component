@@ -20,35 +20,74 @@ class SideContainer extends BaseComponent {
         setLanguage:PropTypes.func.isRequired,
     }
 
+    _add = (title,component,key)=>{
+        const
+            panes = this.state.panes || []
+            panes.push({ title,component,key});
+            this.setState({ panes, activeKey:key});
+    }
 
+    _change = (activeKey)=>{
+        this.setState({ activeKey });
+    }
+
+    _remove = (targetKey)=>{
+        let
+            activeKey = this.state.activeKey,
+            panes = this.state.panes,
+            lastIndex = panes.findIndex(pane=>pane.key === targetKey) -1;
+
+        panes = panes.filter(pane => pane.key !== targetKey);
+        if (lastIndex >= 0 && activeKey === targetKey) {
+            activeKey = panes[lastIndex].key;
+        }
+        this.setState({ panes, activeKey });
+    }
 
     add = (title,component) => {
         const
             panes = this.state.panes || [],
-            added = this.added = this.added || {};
-            if(added[title]){
-                return;
+            // 不能使用外部变量储存，必须即时计算。
+            // added = this.added = this.added || {},
+            key = panes.findIndex(pane=>pane.title===title);
+            if(~key){
+                return this.change(""+key);
             }
-            added[title] = component;
-            panes.push({ title,component});
-            this.setState({ panes, activeKey:""+(panes.length-1)});
+            this._add(title,component,""+panes.length)
     }
 
-    remove = (targetKey) => {
+    change = (activeKey)=>{
+        this._change(activeKey);
+    }
+
+    updateKey = ()=>{
         const
-            panes = this.state.panes || [],
-            added = this.added = this.added || {},
-            deleted = panes.splice(targetKey,1);
-
-        let
-            activeKey = +this.state.activeKey;
-            targetKey = +targetKey;
-            if(activeKey === targetKey || targetKey < activeKey){
-                activeKey -= 1;
-            }
-            this.setState({ panes, activeKey:""+activeKey });
-            added[deleted[0].title] = undefined;
+            panes = this.state.panes || [];
+            panes.forEach((pane,index)=>{
+                pane.key = ""+index;
+            })
+    //    不需要setState,因为真正有可能出问题的是在add时候,remove时一切都正常使用。
     }
+
+
+
+    // 应该是一个通过key remove的方法，key默认为index应该是该方法的语法糖。
+    remove = async (targetKey) => {
+        await this._remove(targetKey);
+        // 重新排序一下。
+        this.updateKey();
+        // const
+        //     panes = this.state.panes || [];
+        //     panes.splice(targetKey,1);
+        // let
+        //     activeKey = +this.state.activeKey;
+        //     targetKey = +targetKey;
+        //     if(activeKey === targetKey || targetKey < activeKey){
+        //         activeKey -= 1;
+        //     }
+        //     this.setState({ panes, activeKey:""+activeKey });
+    }
+
     render() {
         let
             {side, content = [],type} = this.props,
@@ -98,7 +137,7 @@ class SideContainer extends BaseComponent {
                                     type="editable-card"
                                     onEdit={(targetKey, action) =>this[action](targetKey)}
                                 >
-                                    {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane tab={pane.title} key={index}>{<pane.component/>}</Tabs.TabPane>)}
+                                    {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane tab={pane.title} key={pane.key}>{<pane.component/>}</Tabs.TabPane>)}
                                 </Tabs>
                             }
                         </Content>
