@@ -1,22 +1,9 @@
-.ant-btn + .ant-btn{
+.ant-btn + .ant-btn {
   margin-left: 10px;
 }
 
-
-.table-header{
-
-  .header-item {
-
-    &.input{
-      width: 10em;
-    }
-  }
-}
-
-.table-footer{
- @extend .table-header;
-
-  .footer-item{
-    @extend .header-item;
+.anticon.i {
+  &:before {
+    font-family: 'iconfont' !important;
   }
 }

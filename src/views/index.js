@@ -3,7 +3,7 @@ import BaseComponent from "../components/BaseComponent";
 import { BrowserRouter,Route,Link } from 'react-router-dom'
 import App from "./App";
 import SideContainer from "../components/ant/ant-custom/SideContainer";
-
+import 'moment/locale/zh-cn';
 
 
 class Router extends BaseComponent{
@@ -12,7 +12,9 @@ class Router extends BaseComponent{
             <SideContainer
                 side={[
                     {title:'你好',component:App},
-                    {title:'你好2',component:App},
+                    {title:'你好2',children:[
+                            {title:'你好3',component:App},
+                    ]},
                 ]}
             />
         </BrowserRouter>)

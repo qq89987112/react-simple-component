@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 import BaseComponent from "../../BaseComponent";
 
 const {Header, Content, Sider} = Layout,
-    MenuItem = Menu.Item;
+    MenuItem = Menu.Item,
+    SubMenu  = Menu.SubMenu ;
 
 
 class SideContainer extends BaseComponent {
@@ -21,6 +22,7 @@ class SideContainer extends BaseComponent {
     }
 
     _add = (title,component,key)=>{
+        console.log(key);
         const
             panes = this.state.panes || []
             panes.push({ title,component,key});
@@ -49,43 +51,23 @@ class SideContainer extends BaseComponent {
             panes = this.state.panes || [],
             // 不能使用外部变量储存，必须即时计算。
             // added = this.added = this.added || {},
-            key = panes.findIndex(pane=>pane.title===title);
-            if(~key){
-                return this.change(""+key);
+            pane = panes.find(pane=>pane.title===title);
+            if(pane){
+                return this.change(pane.key);
             }
-            this._add(title,component,""+panes.length)
+            this._add(title,component,""+((+(panes[panes.length-1]||{}).key||0)+1))
     }
 
     change = (activeKey)=>{
         this._change(activeKey);
     }
 
-    updateKey = ()=>{
-        const
-            panes = this.state.panes || [];
-            panes.forEach((pane,index)=>{
-                pane.key = ""+index;
-            })
-    //    不需要setState,因为真正有可能出问题的是在add时候,remove时一切都正常使用。
-    }
 
 
 
     // 应该是一个通过key remove的方法，key默认为index应该是该方法的语法糖。
-    remove = async (targetKey) => {
-        await this._remove(targetKey);
-        // 重新排序一下。
-        this.updateKey();
-        // const
-        //     panes = this.state.panes || [];
-        //     panes.splice(targetKey,1);
-        // let
-        //     activeKey = +this.state.activeKey;
-        //     targetKey = +targetKey;
-        //     if(activeKey === targetKey || targetKey < activeKey){
-        //         activeKey -= 1;
-        //     }
-        //     this.setState({ panes, activeKey:""+activeKey });
+    remove =  (targetKey) => {
+         this._remove(targetKey);
     }
 
     render() {
@@ -94,18 +76,22 @@ class SideContainer extends BaseComponent {
             language = this.state.language;
             content = content.map(item => () =>item);
 
-
+            const renderMenuChildren = (children)=>{
+                return children.map((child, index) => child.children ? <SubMenu title={child.title}>
+                    {renderMenuChildren(child.children)}
+                </SubMenu> : <MenuItem item={child}><span>{child.title}</span></MenuItem>)
+            }
         return (
             <Layout className={['side-container',type]}>
                 <Sider collapsible>
                     <div className="logo"/>
-                    <Menu theme='dark' className='side-menu' mode="inline" onClick={({key})=>{
-                        const item = side[+key];
+                    <Menu theme='dark' className='side-menu' mode="inline" onClick={({item})=>{
+                        item = item.props.item;
                         this.add(item.title,item.component)
                     }}>
                         {
                             type==='router'&&side.map((item, index) => <MenuItem key={index}>{item}</MenuItem>) ||
-                            type===undefined &&  side.map((item, index) => <MenuItem key={index} ><span>{item.title}</span></MenuItem>)
+                            type===undefined &&  renderMenuChildren(side)
                         }
                     </Menu>
                 </Sider>
@@ -137,7 +123,7 @@ class SideContainer extends BaseComponent {
                                     type="editable-card"
                                     onEdit={(targetKey, action) =>this[action](targetKey)}
                                 >
-                                    {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane tab={pane.title} key={pane.key}>{<pane.component/>}</Tabs.TabPane>)}
+                                    {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane className='tab-panel' tab={pane.title} key={pane.key}>{<pane.component/>}</Tabs.TabPane>)}
                                 </Tabs>
                             }
                         </Content>
