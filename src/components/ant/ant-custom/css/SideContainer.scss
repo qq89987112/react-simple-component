@@ -6,6 +6,14 @@
   right: 0;
   bottom: 0;
 
+  &.router{
+    .side-content-wrapper{
+      .side-content{
+        padding: 20px;
+      }
+    }
+  }
+
   .side-menu{
     .anticon{
       font-size: 16px;
@@ -28,7 +36,7 @@
 
     .side-content{
       background-color: #fff;
-      padding: 20px;
+      padding: 5px;
     }
   }
 }

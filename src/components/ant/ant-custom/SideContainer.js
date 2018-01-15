@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, Menu, Button, Dropdown} from 'antd'
+import {Layout, Menu, Button, Dropdown,Tabs} from 'antd'
 import './css/SideContainer.scss'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -20,20 +20,54 @@ class SideContainer extends BaseComponent {
         setLanguage:PropTypes.func.isRequired,
     }
 
+
+
+    add = (title,component) => {
+        const
+            panes = this.state.panes || [],
+            added = this.added = this.added || {};
+            if(added[title]){
+                return;
+            }
+            added[title] = component;
+            panes.push({ title,component});
+            this.setState({ panes, activeKey:""+(panes.length-1)});
+    }
+
+    remove = (targetKey) => {
+        const
+            panes = this.state.panes || [],
+            added = this.added = this.added || {},
+            deleted = panes.splice(targetKey,1);
+
+        let
+            activeKey = +this.state.activeKey;
+            targetKey = +targetKey;
+            if(activeKey === targetKey || targetKey < activeKey){
+                activeKey -= 1;
+            }
+            this.setState({ panes, activeKey:""+activeKey });
+            added[deleted[0].title] = undefined;
+    }
     render() {
         let
-            {side, content} = this.props,
+            {side, content = [],type} = this.props,
             language = this.state.language;
-
-            content = content.map(item => () => item);
+            content = content.map(item => () =>item);
 
 
         return (
-            <Layout className='side-container'>
+            <Layout className={['side-container',type]}>
                 <Sider collapsible>
                     <div className="logo"/>
-                    <Menu theme='dark' className='side-menu' mode="inline">
-                        {side.map((item, index) => <MenuItem key={index}>{item}</MenuItem>)}
+                    <Menu theme='dark' className='side-menu' mode="inline" onClick={({key})=>{
+                        const item = side[+key];
+                        this.add(item.title,item.component)
+                    }}>
+                        {
+                            type==='router'&&side.map((item, index) => <MenuItem key={index}>{item}</MenuItem>) ||
+                            type===undefined &&  side.map((item, index) => <MenuItem key={index} ><span>{item.title}</span></MenuItem>)
+                        }
                     </Menu>
                 </Sider>
                 <Layout>
@@ -56,7 +90,16 @@ class SideContainer extends BaseComponent {
                     <div className='side-content-wrapper'>
                         <Content className="side-content">
                             {
-                                content.map((Item, index) => <Item key={index}/>)
+                                type==='router'&& content.map((Item, index) => <Item key={index}/>) ||
+                                type===undefined && <Tabs
+                                    hideAdd
+                                    onChange = {(activeKey) => this.setState({ activeKey })}
+                                    activeKey={this.state.activeKey}
+                                    type="editable-card"
+                                    onEdit={(targetKey, action) =>this[action](targetKey)}
+                                >
+                                    {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane tab={pane.title} key={index}>{<pane.component/>}</Tabs.TabPane>)}
+                                </Tabs>
                             }
                         </Content>
                     </div>

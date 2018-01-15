@@ -42,6 +42,7 @@
      >
      </Modal>
 ### 传参
+    1、通过函数
         <Modal
            footer={ ({user})=>[
              <Button key="back" onClick={this.handleCancel}>Return</Button>,
@@ -51,3 +52,6 @@
            ]}
          >
          </Modal>
+
+
+     2、通过包裹一层标签来监听原生函数。

@@ -11,10 +11,8 @@ class Router extends BaseComponent{
         return (<BrowserRouter>
             <SideContainer
                 side={[
-                    <Link to="/"><i className="anticon icon-home"/><span>test</span></Link>
-                ]}
-                content={[
-                    <Route exact path="/" component={App}/>
+                    {title:'你好',component:App},
+                    {title:'你好2',component:App},
                 ]}
             />
         </BrowserRouter>)
