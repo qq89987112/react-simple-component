@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from "../components/BaseComponent";
-import { BrowserRouter,Route,Link } from 'react-router-dom'
+import { HashHistory,Route,Link } from 'react-router-dom'
 import App from "./App";
 import SideContainer from "../components/ant/ant-custom/SideContainer";
 import 'moment/locale/zh-cn';
@@ -8,7 +8,7 @@ import 'moment/locale/zh-cn';
 
 class Router extends BaseComponent{
     render(){
-        return (<BrowserRouter>
+        return (<HashHistory>
             <SideContainer
                 side={[
                     {title:'你好',component:App},
@@ -17,7 +17,7 @@ class Router extends BaseComponent{
                     ]},
                 ]}
             />
-        </BrowserRouter>)
+        </HashHistory>)
     }
 }
 
