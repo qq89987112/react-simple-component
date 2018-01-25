@@ -17,6 +17,9 @@ class ApiUtils {
                     })
                     self.$cancel(loadingName);
                     return data;
+                }).catch(data=>{
+                    self.$cancel(loadingName);
+                    return Promise.reject(data);
                 });
             };
 
