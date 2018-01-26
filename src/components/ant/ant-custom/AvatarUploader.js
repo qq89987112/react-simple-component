@@ -8,15 +8,17 @@ function getBase64(img, callback) {
 }
 
 function beforeUpload(file) {
-    const isJPG = file.type === 'image/jpeg';
-    if (!isJPG) {
-        message.error('You can only upload JPG file!');
+    if (/image\/(jpeg|jpg|png|bmp)/.test(file.type)) {
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (isLt2M) {
+            return true;
+        }else{
+            message.error('Image must smaller than 2MB!');
+        }
+    }else{
+        message.error('只能上传 JPG|PNG|JPEG 格式的文件');
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJPG && isLt2M;
+    return false
 }
 
 class AvatarUploader extends React.Component {
@@ -40,12 +42,13 @@ class AvatarUploader extends React.Component {
         const uploadButton = (
             <div>
                 <Icon type={this.state.loading ? 'loading' : 'plus'} />
-                <div className="ant-upload-text">Upload</div>
+                <div className="ant-upload-text">上传</div>
             </div>
         );
         const imageUrl = this.state.imageUrl;
         return (
             <Upload
+                accept="image/jpeg,image/jpg,image/png"
                 name="avatar"
                 listType="picture-card"
                 className="avatar-uploader"
