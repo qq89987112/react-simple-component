@@ -1,1 +1,0 @@
-# Modal 的 visible 可以用modalType 代替,而modalType又可以做多个Modal时的整合。

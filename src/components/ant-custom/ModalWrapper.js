@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal} from 'antd'
 import ReactDOM from 'react-dom';
-import BaseAntPage from "../../BaseComponent";
+import BaseAntPage from "../BaseComponent";
 
 // 使用方式为
 // this.$showModal(({resolve,reject,params,form})=><div></div>).then((result)=>{})

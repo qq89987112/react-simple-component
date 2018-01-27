@@ -3,7 +3,7 @@ import {Layout, Menu, Button, Dropdown,Tabs} from 'antd'
 import './css/SideContainer.scss'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import BaseComponent from "../../BaseComponent";
+import BaseComponent from "../BaseComponent";
 
 const {Header, Content, Sider} = Layout,
     MenuItem = Menu.Item,

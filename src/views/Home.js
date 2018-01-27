@@ -1,7 +1,7 @@
 import React from "react";
 import BaseComponent from "../components/BaseComponent";
 import App from "./App";
-import SideContainer from "../components/ant/ant-custom/SideContainer";
+import SideContainer from "../components/ant-custom/SideContainer";
 
 
 

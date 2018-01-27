@@ -2,7 +2,7 @@
 import React from 'react';
 import {Form, Input, Checkbox, Button, Modal} from "antd";
 import BaseComponent from "../components/BaseComponent";
-import FormUtils from "../components/ant/ant-custom/FormUtils";
+import FormUtils from "../components/ant-custom/FormUtils";
 import validator from "../js/validator";
 
 const FormItem = Form.Item;

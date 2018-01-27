@@ -1,3 +1,9 @@
-.ant-btn + .ant-btn{
+.ant-btn + .ant-btn {
   margin-left: 10px;
+}
+
+.anticon.i {
+  &:before {
+    font-family: 'iconfont' !important;
+  }
 }

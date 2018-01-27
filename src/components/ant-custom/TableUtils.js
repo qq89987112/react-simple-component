@@ -1,4 +1,4 @@
-import ApiUtils from "../../../js/api/Utils";
+import ApiUtils from "../../js/api/Utils";
 
 class TableUtils{
     constructor(ctx){
