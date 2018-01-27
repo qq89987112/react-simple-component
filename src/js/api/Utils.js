@@ -13,7 +13,7 @@ class ApiUtils {
                 self.$load(loadingName);
                 return apiFunc(...params).then((data) => {
                     stateName&&self.setState({
-                        [stateName]: data.data
+                        [stateName]: data.list
                     })
                     self.$cancel(loadingName);
                     return data;
@@ -28,27 +28,34 @@ class ApiUtils {
         return wrapper
     }
 
-    wrapWithLoadMore(apiFunc,{ rows = 10,params} = {}){
+    wrapWithLoadMore(apiFunc,params = {}){
         let
             _page = 1,
             _isLoaded = false,
-            _params = params;
+            _params = params,
+            _rows = params.rows || 10;
 
         return {
             reLoad(params) {
                 _page = 1;
                 _isLoaded = false;
                 _params = params || _params;
-                return apiFunc(_page, rows, _params);
+                _params.pageNum = _page;
+                _params.pageSize = _rows;
+                return apiFunc(_params);
             },
             // 这个主要功能是当通过筛选reLoad后,保存筛选条件进行分页
             loadPage(page){
-                return apiFunc(page, rows, _params);
+                _params.pageNum = _page;
+                _params.pageSize = _rows;
+                return apiFunc(_params);
             },
             loadNext() {
+                _params.pageNum = ++_page;
+                _params.pageSize = _rows;
                 return _isLoaded && Promise.reject({msg: "全部加载完成"}) ||
 
-                    apiFunc(++_page, rows, _params).then((data) => {
+                    apiFunc(_params).then((data) => {
                         data = data.data;
                         if (data && data.length === 0) {
                             _isLoaded = true;
