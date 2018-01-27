@@ -1,10 +1,9 @@
 /* eslint-disable no-duplicate-case */
 import React from 'react';
 import {Form, Input, Checkbox, Button, Modal} from "antd";
-import FormUtils from "../../components/ant-custom/FormUtils";
-import validator from "../../js/validator";
-import BaseComponent from "../BaseComponent";
-import auth from "../../js/api/auth";
+import BaseComponent from "../components/BaseComponent";
+import FormUtils from "../components/ant/ant-custom/FormUtils";
+import validator from "../js/validator";
 
 const FormItem = Form.Item;
 
@@ -27,7 +26,7 @@ class LoginForm extends BaseComponent {
         e.preventDefault();
         this.$load('login');
         //    根据不同的帐号跳转到不同的页面
-        auth.login().then(() => {
+        Promise.resolve().then(() => {
             //登录成功后保存相关信息
             let history = this.props.history;
             history.push('/home');

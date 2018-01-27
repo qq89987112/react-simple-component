@@ -1,22 +1,19 @@
 import React from "react";
 import BaseComponent from "../components/BaseComponent";
 import { HashRouter,Route,Link } from 'react-router-dom'
-import App from "./App";
-import SideContainer from "../components/ant/ant-custom/SideContainer";
 import 'moment/locale/zh-cn';
+import Home from "./Home";
+import Login from "./Login";
 
 
 class Router extends BaseComponent{
     render(){
         return (<HashRouter>
-            <SideContainer
-                side={[
-                    {title:'你好',component:App},
-                    {title:'你好2',children:[
-                            {title:'你好3',component:App},
-                    ]},
-                ]}
-            />
+            <div>
+                <Route exact path="/" component={Login}/>
+                <Route exact path="/home" component={Home}/>
+            </div>
+
         </HashRouter>)
     }
 }
