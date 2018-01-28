@@ -9,7 +9,7 @@ class ExpandBox extends React.Component {
 
     render() {
         let
-            {children,style} = this.props,
+            {children,style={}} = this.props,
             _style = {
                 whiteSpace: this.state.expand ? 'normal' : 'nowrap',
                 textOverflow: 'ellipsis',
