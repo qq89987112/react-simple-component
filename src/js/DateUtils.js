@@ -49,4 +49,14 @@ export default class DateUtils {
         const thisDate = this.date;
         return thisDate.toUTCString().replace(/ [\d:]+ GMT/,"") === date.toUTCString().replace(/ [\d:]+ GMT/,"");
     }
+
+    static formatTime(seconds) {
+        return [
+            parseInt(seconds / 60 / 60),
+            parseInt(seconds / 60 % 60),
+            parseInt(seconds % 60)
+        ]
+            .join(":")
+            .replace(/\b(\d)\b/g, "0$1");
+    }
 }
