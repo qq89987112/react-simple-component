@@ -8,14 +8,15 @@ class ExpandBox extends React.Component {
     }
 
     render() {
-        const
-            {children} = this.props,
-            style = {
+        let
+            {children,style} = this.props,
+            _style = {
                 whiteSpace: this.state.expand ? 'normal' : 'nowrap',
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
                 cursor:'pointer'
             };
+            style = Object.assign(style,_style)
 
         return (
             <div className='expand-box' style={style} onClick={() => this.setState({expand: !this.state.expand})}>
