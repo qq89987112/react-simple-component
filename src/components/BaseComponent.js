@@ -1,4 +1,5 @@
 import React from "react";
+import {message} from "ant";
 import ApiUtils from "../js/api/Utils";
 
 class BaseComponent extends React.Component {
@@ -19,7 +20,30 @@ class BaseComponent extends React.Component {
         //BaseAntPage.$f2 = this.props.intl.formatMessage;
         return BaseComponent.formatMessage({id, defaultMessage}) || this.props.intl.formatMessage({id, defaultMessage});
     }
-
+    $formCheck(...params){
+        return params.find(item=>{
+            const
+                name = item[0],
+                //通过时的条件
+                test = item[1],
+                error = item[2];
+            if(test instanceof Function){
+                if (!test(this.__form_value__[name])) {
+                    message.error(error);
+                    //中断循环
+                    return true;
+                }
+            }else if(test instanceof RegExp){
+                if (!test.test(this.__form_value__[name])) {
+                    message.error(error);
+                    //中断循环
+                    return true;
+                }
+            }else{
+                throw new Error('不支持的语法')
+            }
+        })
+    }
 
     //form表单相关
     __form_value__ = {}
