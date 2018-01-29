@@ -13,6 +13,7 @@ class TableUtils {
             loadingWrapper = apiUtils.wrapWidthLoading(api, name, name),
             loadingMoreWrapper = apiUtils.wrapWithLoadMore(loadingWrapper, params);
         return loadingMoreWrapper.reLoad().then((data) => {
+                context[name+"LoadMore"] = loadingMoreWrapper;
                 context.setState({
                     [`${name}Pagi`]: {
                         total: data.totalCount,
@@ -20,7 +21,7 @@ class TableUtils {
                     },
                     [`${name}Reload`]: loadingMoreWrapper.reLoad
                 })
-                return [data,loadingMoreWrapper];
+                return data;
             }
         )
     }
