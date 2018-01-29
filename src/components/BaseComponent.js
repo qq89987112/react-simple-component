@@ -1,5 +1,5 @@
 import React from "react";
-import {message} from "ant";
+import {message} from "antd";
 import ApiUtils from "../js/api/Utils";
 
 class BaseComponent extends React.Component {
