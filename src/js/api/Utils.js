@@ -36,6 +36,11 @@ class ApiUtils {
             _rows = params.rows || 10;
 
         return {
+            reLoadPage() {
+                _params.pageNum = _page;
+                _params.pageSize = _rows;
+                return apiFunc(_params);
+            },
             reLoad(params) {
                 _page = 1;
                 _isLoaded = false;
