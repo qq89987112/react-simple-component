@@ -63,6 +63,10 @@ class BaseComponent extends React.Component {
         }
     }
 
+    $resetAllValue(){
+        this.__form_value__ = {};
+    }
+
 
     $setInputValue = (name, value, realTime) => {
         if (realTime) {
