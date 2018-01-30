@@ -14,8 +14,7 @@ class LoginForm extends BaseComponent {
 
     state = {
         account: '',
-        password: '',
-        autoLogin: true,
+        password: ''
     }
 
     componentDidMount() {
@@ -25,6 +24,8 @@ class LoginForm extends BaseComponent {
     login = (e) => {
         e.preventDefault();
         this.$load('login');
+        console.log(this.formUtils.getFieldsValue(["account", "password"]));;
+        // debugger
         //    根据不同的帐号跳转到不同的页面
         Promise.resolve().then(() => {
             //登录成功后保存相关信息
@@ -48,15 +49,6 @@ class LoginForm extends BaseComponent {
                 {
                     formUtils.getFieldDecoratorEx({field:"password",rules: validator.password,label:"密码"})( <Input type="password"/>)
                 }
-                <FormItem>
-                    <Checkbox checked={this.state.autoLogin}
-                              onChange={this.$onInput('autoLogin')}>自动登录</Checkbox>
-                    <Button className='fr' type='default'
-                            onClick={async () => {
-                                await this.setState({type: 'forget'})
-                                formUtils.validateFields()
-                            }}>忘记密码</Button>
-                </FormItem>
                 <FormItem>
                     <Button htmlType="submit" disabled={formUtils.hasErrors()}
                             className='horizontal-center' type='primary'
