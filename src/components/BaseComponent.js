@@ -77,7 +77,7 @@ class BaseComponent extends React.Component {
             form = realTime ? this.state : this.__form_value__;
         if (name) {
             return names.reduce((prev, name) => {
-                    form[name] && (prev[name] = form[name])
+                    form[name]!==undefined && (prev[name] = form[name])
                     return prev
                 }, {}
             )
