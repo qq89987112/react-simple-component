@@ -31,9 +31,6 @@ class AuthRoute extends BaseAntPage {
         if (!account || (type && account.type !== type)) {
             status = 'ban';
         }
-        if(account&&account.type ==='*'){
-            status = 'valid';
-        }
         return <Route {...rest} render={props => {
             return (
                 (this.$isLoading("login") && <Spin/>) ||
