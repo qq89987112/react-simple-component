@@ -71,11 +71,10 @@ class BaseComponent extends React.Component {
 
     }
 
-    $getInputValue = (name, realTime) => {
+    $getInputValue = (names) => {
         const
-            names = [].concat(name),
-            form = realTime ? this.state : this.__form_value__;
-        if (name) {
+            form = this.__form_value__;
+        if (Array.isArray(names)) {
             return names.reduce((prev, name) => {
                     form[name]!==undefined && (prev[name] = form[name])
                     return prev
@@ -83,7 +82,7 @@ class BaseComponent extends React.Component {
             )
         }
         else {
-            return form;
+            return form[names];
         }
     }
 
