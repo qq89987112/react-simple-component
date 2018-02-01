@@ -54,41 +54,20 @@ class AvatarUploader extends React.Component {
             }
         } = this.props;
         QiNiu.initUpload(this.state.id, "/api/admin/pub/GetQiniuPictureToken", {
-            FileUploaded:(res)=>{
+            FileUploaded:(res,options)=>{
                 const onInput = this.props.onInput;
+                // if (/^audio/i.test(options.file.type)) {
+                //     debugger
+                // }
+
                 this.setState({
                     url: res,
                     loading: false
                 })
-                onInput && onInput(res);
+                onInput && onInput(res,options);
             },
             BeforeUpload: (up, file) => {
-                if (/^audio/i.test(file.type)) {
-                    const audio = document.createElement("audio");
-                    audio.src = window.createObjectURL && window.createObjectURL(file) || window.URL && window.URL.createObjectURL(file) || window.webkitURL && window.webkitURL.createObjectURL(file);
 
-                    function g() {
-                        let value = audio.duration;
-                        let
-                            hour = String(Math.floor(value / 3600)).padStart(2, '0'),
-                            min = String(Math.floor(value / 60) % 60).padStart(2, '0'),
-                            sec = String(value % 60).padStart(2, '0');
-                        if (isNaN(value)) {
-                            requestAnimationFrame(g)
-                        } else {
-                            onFileSelect({
-                                type: file.type,
-                                file,
-                                duration: {
-                                    value,
-                                    format: `${hour}时${min}分${sec}秒`
-                                }
-                            })
-                        }
-                    }
-
-                    requestAnimationFrame(g);
-                }
                 this.setState({
                     loading: true
                 })

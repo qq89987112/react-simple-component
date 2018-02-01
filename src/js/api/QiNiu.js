@@ -8,18 +8,18 @@ export default class QiNiu {
                     browse_button: id+"", //上传选择的点选按钮，**必需**
                     uptoken_func:()=>token.token,
                     domain:token.urlPrefix+"/", //bucket 域名，下载资源时用到，**必需**
-                    max_file_size: '100mb', //最大文件体积限制
+                    max_file_size: '99999mb', //最大文件体积限制
                     flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.9/Moxie.swf', //引入flash,相对路径
                     max_retries: 3, //上传失败最大重试次数
                     chunk_size: '4mb', //分块上传时，每片的体积
                     auto_start: true, //选择文件后自动上传，若关闭需要自己绑定事件触发上传
-                    init:Object.assign(cb,{
+                    init:Object.assign({},cb,{
                         'FileUploaded': function(up, file, info) {
                             var domain = up.getOption('domain');
                             var res = JSON.parse(info);
                             var sourceUrl = domain + res.key; //获取上传成功后的文件的Url
                             let fileUploaded = cb.FileUploaded;
-                            fileUploaded&&fileUploaded(sourceUrl);
+                            fileUploaded&&fileUploaded(sourceUrl,up, file, info);
                         },
                         'Error': function(up, err, errTip) {
                             //上传出错时,处理相关的事情
