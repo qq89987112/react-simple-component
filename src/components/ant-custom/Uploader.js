@@ -111,15 +111,15 @@ class AvatarUploader extends React.Component {
                 {/*如果有视图URL，就显示*/}
                 {viewUrl&&(
                     <a style={style} target="_blank" href={viewUrl}>
-                        type==='image'&& <img style={style} src={viewUrl} alt="" /> ||
-                        <Icon style={style} type="file"/>
+                        {type==='image'&& <img style={style} src={viewUrl} alt="" /> ||
+                        <Icon style={style} type="file"/>}
                         {addOn&&addOn}
                     </a>
                 )}
                 <div id={id} style={{
                     border:"1px solid #e4e4e4",
                     width:100,
-                    lineHeight:"100px",
+                    height:"100px",
                     position:"absolute",
                     left:'0',
                     right:'0',
