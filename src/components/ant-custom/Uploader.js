@@ -45,8 +45,19 @@ class AvatarUploader extends React.Component {
     }
 
     componentDidMount(){
+        const {onFileSelect = ()=>{}} = this.props;
         QiNiu.initUpload(this.state.id,"/api/admin/pub/GetQiniuPictureToken",{
-            BeforeUpload:()=>{
+            BeforeUpload:(up, file)=>{
+                if(/^audio/i.test(file.type)){
+                    const audio=document.createElement("audio");
+                    audio.src=window.createObjectURL&&window.createObjectURL(file)||window.URL&&window.URL.createObjectURL(file)||window.webkitURL && window.webkitURL.createObjectURL(file);
+                    function g(){isNaN(audio.duration) ? requestAnimationFrame(g):onFileSelect({
+                        type:file.type,
+                        file,
+                        duration:audio.duration
+                    })}
+                    requestAnimationFrame(g);
+                }
                 this.setState({
                     loading:true
                 })
