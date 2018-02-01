@@ -129,8 +129,15 @@ class AvatarUploader extends React.Component {
                     </a>)
                 }
                 <div id={id} style={style}>
-                    {/*如果是图片就显示+号否则上传图标*/}
-                    <Icon style={style} type={viewUrl ? 'reload':type === 'image' ? 'plus' : 'upload'}/>
+                    {/*如果第一次上传，就显示loading
+                       其次之外，有视图时，显示reload，
+                       否则（还未上传时）
+                       图片显示plus
+                       文件显示upload*/}
+
+                    {(!viewUrl)&&this.state.loading&&<Icon style={style} type='loading'/> ||
+                    viewUrl&&<Icon style={style} type='reload'/> ||
+                    <Icon style={style} type={type === 'image' ? 'plus' : 'upload'}/>}
                 </div>
             </div>;
 
