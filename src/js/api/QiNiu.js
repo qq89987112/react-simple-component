@@ -2,8 +2,7 @@ import axios from "axios"
 
 export default class QiNiu {
     static initUpload(id,tokenUrl,cb = {}){
-        return new Promise((resolve,reject)=>{
-            axios.get(tokenUrl).then((token)=>{
+        return  axios.get(tokenUrl).then((token)=>{
                 window.Qiniu.uploader({
                     runtimes: 'html5,flash,html4', //上传模式,依次退化
                     browse_button: id+"", //上传选择的点选按钮，**必需**
@@ -19,11 +18,13 @@ export default class QiNiu {
                             var domain = up.getOption('domain');
                             var res = JSON.parse(info);
                             var sourceUrl = domain + res.key; //获取上传成功后的文件的Url
-                            resolve(sourceUrl);
+                            let fileUploaded = cb.FileUploaded;
+                            fileUploaded&&fileUploaded(sourceUrl);
                         },
                         'Error': function(up, err, errTip) {
                             //上传出错时,处理相关的事情
-                            reject(errTip);
+                            let error = cb.error;
+                            error&&error(up, err, errTip);
                         },
                         'Key': function(up, file) {
                             // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
@@ -48,8 +49,6 @@ export default class QiNiu {
                     })
                 });
             })
-
-        })
 
     }
 }
