@@ -51,11 +51,25 @@ class AvatarUploader extends React.Component {
                 if(/^audio/i.test(file.type)){
                     const audio=document.createElement("audio");
                     audio.src=window.createObjectURL&&window.createObjectURL(file)||window.URL&&window.URL.createObjectURL(file)||window.webkitURL && window.webkitURL.createObjectURL(file);
-                    function g(){isNaN(audio.duration) ? requestAnimationFrame(g):onFileSelect({
-                        type:file.type,
-                        file,
-                        duration:audio.duration
-                    })}
+                    function g(){
+                        let value = audio.duration;
+                        let
+                            hour = String(Math.floor(value/3600)).padStart(2,'0'),
+                            min = String(Math.floor(value/60) % 60).padStart(2,'0'),
+                            sec = String(value % 60).padStart(2,'0');
+                        if(isNaN(value)){
+                            requestAnimationFrame(g)
+                        }else{
+                            onFileSelect({
+                                type:file.type,
+                                file,
+                                duration:{
+                                    value,
+                                    format:`${hour}时${min}分${sec}秒`
+                                }
+                            })
+                        }
+                    }
                     requestAnimationFrame(g);
                 }
                 this.setState({
@@ -75,7 +89,7 @@ class AvatarUploader extends React.Component {
 
     render() {
         const {url,id,uploaded} = this.state;
-        const {type = 'image'} = this.props;
+        const {type = 'image',reeligible=true,defaultUrl} = this.props;
 
        //<div id={id}>
        //    <Icon style={{
@@ -84,14 +98,23 @@ class AvatarUploader extends React.Component {
        //        lineHeight:"100px"
        //    }} type={this.state.loading ? 'loading' : 'plus'} />
        //</div>
-        const style={
-            border:"1px solid #e4e4e4",
-            width:100,
-            lineHeight:"100px",
-            display:'inline-block',
-            height:"100px",
-        } ,uploadButton = (
-            <div style={{position:"relative"}}>
+        const
+            style={
+                border:"1px solid #e4e4e4",
+                width:100,
+                lineHeight:"100px",
+                display:'inline-block',
+                height:"100px",
+            };
+            let viewUrl = url || defaultUrl, //用于显示的视图url
+                content = <div style={{position:"relative"}}>
+                {/*如果有视图URL，就显示*/}
+                {viewUrl&&(
+                    <a style={style} target="_blank" href={viewUrl}>
+                        type==='image'&& <img style={style} src={viewUrl} alt="" /> ||
+                        <Icon style={style} type="file"/>
+                    </a>
+                )}
                 <div id={id} style={{
                     border:"1px solid #e4e4e4",
                     width:100,
@@ -101,14 +124,18 @@ class AvatarUploader extends React.Component {
                     right:'0',
                     top:'0',
                     bottom:'0',
-                    zIndex:uploaded ? -1 : 1
+                    // zIndex: reeligible ? 1 : uploaded ? -1 : 1
+                    display: reeligible ? 'inline-block' : uploaded ? "none" : "inline-block"
                 }}>
+                    {/*如果是图片就显示+号否则上传图标*/}
+                    <Icon style={style} type={this.state.loading ? 'loading' : type==='image' ? 'plus':'upload'} />
                 </div>
-                <Icon style={style} type={this.state.loading ? 'loading' : 'plus'} />
-            </div>
-        );
+            </div>;
+
         return (
-            <div>{uploaded ? (type==='image'&&<img style={style} src={url} alt="" />|| <a style={style} target="_blank" href={url}><Icon style={style} type={type}/></a>) : uploadButton}</div>
+            <div>{
+                content
+            }</div>
         );
     }
 }
