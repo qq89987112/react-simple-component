@@ -23,7 +23,7 @@ class ApiUtils {
                 });
             };
 
-            this.wrapLoadingCache.set(apiFunc, wrapper);
+        this.wrapLoadingCache.set(apiFunc, wrapper);
 
         return wrapper
     }
@@ -37,7 +37,7 @@ class ApiUtils {
 
         return {
             getParams(){
-              return _params;
+                return _params;
             },
             reLoadPage() {
                 _params.pageNum = _page;
@@ -54,7 +54,7 @@ class ApiUtils {
             },
             // 这个主要功能是当通过筛选reLoad后,保存筛选条件进行分页
             loadPage(page){
-                _params.pageNum = _page;
+                _params.pageNum = page;
                 _params.pageSize = _rows;
                 return apiFunc(_params);
             },

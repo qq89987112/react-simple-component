@@ -71,9 +71,15 @@ class BaseComponent extends React.Component {
 
     }
 
+    $setInputValue = (name, value) => {
+        const
+            form = this.__form_value__ ;
+            form[name] = value;
+    }
+
     $getInputValue = (names) => {
         const
-            form = this.__form_value__;
+            form =  this.__form_value__ ;
         if (Array.isArray(names)) {
             return names.reduce((prev, name) => {
                     form[name]!==undefined && (prev[name] = form[name])
@@ -91,15 +97,7 @@ class BaseComponent extends React.Component {
     }
 
 
-    $setInputValue = (name, value, realTime) => {
-        if (realTime) {
-            this.setState({
-                [name]: value
-            });
-        } else {
-            this.__form_value__[name] = value;
-        }
-    }
+
 
 
 
