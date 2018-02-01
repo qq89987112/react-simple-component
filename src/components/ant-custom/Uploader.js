@@ -89,7 +89,7 @@ class AvatarUploader extends React.Component {
 
     render() {
         const {url,id,uploaded} = this.state;
-        const {type = 'image',reeligible=true,defaultUrl} = this.props;
+        const {type = 'image',reeligible=true,defaultUrl,addOn} = this.props;
 
        //<div id={id}>
        //    <Icon style={{
@@ -113,6 +113,7 @@ class AvatarUploader extends React.Component {
                     <a style={style} target="_blank" href={viewUrl}>
                         type==='image'&& <img style={style} src={viewUrl} alt="" /> ||
                         <Icon style={style} type="file"/>
+                        {addOn&&addOn}
                     </a>
                 )}
                 <div id={id} style={{
