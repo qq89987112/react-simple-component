@@ -25,7 +25,6 @@ class LoginForm extends BaseComponent {
         e.preventDefault();
         this.$load('login');
         console.log(this.formUtils.getFieldsValue(["account", "password"]));;
-        // debugger
         //    根据不同的帐号跳转到不同的页面
         Promise.resolve().then(() => {
             //登录成功后保存相关信息
