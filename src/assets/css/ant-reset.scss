@@ -2,6 +2,12 @@
   margin-left: 10px;
 }
 
+.ant-table-thead{
+  th{
+    white-space: nowrap;
+  }
+}
+
 .anticon.i {
   &:before {
     font-family: 'iconfont' !important;
