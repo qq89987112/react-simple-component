@@ -162,13 +162,6 @@ class BaseComponent extends React.Component {
         })
     }
 
-    toast(text){
-        message.success(text);
-    }
-
-    toastError(text){
-        message.error(text);
-    }
 
     __form_value__ = {}
     $onInput = (name, realTime) => {
