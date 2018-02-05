@@ -66,7 +66,7 @@ class ForgetForm extends BaseComponent {
 const BaseForm = Form.create()(ForgetForm);
 
 
-export default class Forge extends React.Component {
+export default class ForgetPassword extends React.Component {
     render() {
         return <BaseForm {...this.props}/>
     }

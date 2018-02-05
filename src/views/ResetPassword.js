@@ -71,7 +71,7 @@ class ResetForm extends BaseComponent {
 const BaseForm = Form.create()(ResetForm);
 
 
-export default class Reset extends React.Component {
+export default class ResetPassword extends React.Component {
     render() {
         return <BaseForm {...this.props}/>
     }
