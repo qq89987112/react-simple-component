@@ -4,7 +4,7 @@ import axios from "axios"
 
 export class QiNiu {
     static initUpload(id,tokenUrl,cb = {}){
-        return  axios.get(tokenUrl).then((token)=>{
+        return  axios.get(tokenUrl).then((token={})=>{
             window.Qiniu.uploader({
                 filters : {
                     mime_types: [
@@ -36,7 +36,6 @@ export class QiNiu {
 
                         if (/^audio/i.test(file.type)) {
                             //这个catch为了过拦截器
-                            sourceUrl = sourceUrl.replace(/^(http:)|(https:)/,"")
                             promise = axios.get(`${sourceUrl}?avinfo`).catch(data=>data).then(data=>{
                                 let
                                     value = data.format.duration,
