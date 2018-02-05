@@ -162,6 +162,7 @@ class BaseComponent extends React.Component {
         })
     }
 
+
     __form_value__ = {}
     $onInput = (name, realTime) => {
         const type = Object.prototype.toString.call(name);

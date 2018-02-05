@@ -49,6 +49,10 @@ class LoginForm extends BaseComponent {
                     formUtils.getFieldDecoratorEx({field:"password",rules: validator.password,label:"密码"})( <Input type="password"/>)
                 }
                 <FormItem>
+                    <Checkbox onChange={this.$onInput('autoLogin')}>自动登陆</Checkbox>
+                    <Button className='fr' type='default'>忘记密码</Button>
+                </FormItem>
+                <FormItem>
                     <Button htmlType="submit" disabled={formUtils.hasErrors()}
                             className='horizontal-center' type='primary'
                             loading={this.$isLoading('login')}>登录</Button>

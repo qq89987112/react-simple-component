@@ -89,6 +89,7 @@ export class QiNiu {
     }
 }
 
+
 export default class Uploader extends React.Component {
     state = {
         loading: false,
@@ -102,10 +103,6 @@ export default class Uploader extends React.Component {
     }
 
     initUpload(){
-        const {
-            onFileSelect = () => {
-            }
-        } = this.props;
         QiNiu.initUpload(this.state.id, "/api/admin/pub/GetQiniuPictureToken", {
             FileUploaded:(res,options)=>{
                 const onInput = this.props.onInput;
