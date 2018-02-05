@@ -8,6 +8,7 @@ const Dragger = Upload.Dragger;
 class UploadBox extends BaseComponent {
 
     render() {
+        const {onResult} = this.props;
         const props = {
             name: 'file',
             multiple: true,
@@ -18,7 +19,8 @@ class UploadBox extends BaseComponent {
                     console.log(info.file, info.fileList);
                 }
                 if (status === 'done') {
-                    message.success(`${info.file.name} file uploaded successfully.`);
+                    // message.success(`${info.file.name} file uploaded successfully.`);
+                    onResult&&onResult(info);
                 } else if (status === 'error') {
                     message.error(`${info.file.name} file upload failed.`);
                 }
