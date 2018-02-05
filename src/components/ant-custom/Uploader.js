@@ -1,4 +1,4 @@
-import {Upload, Icon, message} from 'antd';
+import {Icon} from 'antd';
 import React from "react"
 import axios from "axios"
 
@@ -89,13 +89,12 @@ export class QiNiu {
 }
 
 
-class AvatarUploader extends React.Component {
+export default class Uploader extends React.Component {
     state = {
         loading: false,
         id: new Date().getTime() / Math.random(),
         uploaded: false
     };
-
 
 
     componentDidMount() {
@@ -177,6 +176,3 @@ class AvatarUploader extends React.Component {
         );
     }
 }
-
-
-export default AvatarUploader
