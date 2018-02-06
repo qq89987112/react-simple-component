@@ -8,16 +8,20 @@ const
 
 export default class AutoCompleteWrapper extends React.Component {
 
+    state = {}
+
     handleSearch = (value) => {
         let { onSearch,dataIndex} = this.props;
 
-        onSearch&&onSearch().then(data=>{
-            const array = data.map(item=>item[dataIndex]);
-            this.setState({
-                dataSource:array
-            });
-        })
-
+        clearTimeout(this.timeout);
+        setTimeout(()=>{
+            onSearch&&onSearch(value).then(data=>{
+                const array = data.map(item=>item[dataIndex]);
+                this.setState({
+                    dataSource:array
+                });
+            })
+        },1000)
     }
 
     onSelect(key){
@@ -28,12 +32,15 @@ export default class AutoCompleteWrapper extends React.Component {
 
     render() {
         // onSearch : return a promise that return array of object
-        const { dataSource } = this.state;
+        const { dataSource=[] } = this.state;
+        let { onSearch,onSelect,...rest} = this.props;
+
         return (
             <AutoComplete
                 onSelect={this.onSelect}
                 onSearch={this.handleSearch}
                 style={{ width: 200 }}
+                {...rest}
             >
                 {dataSource.map((item,index) => {
                     return <Option key={index}>{item}</Option>;
