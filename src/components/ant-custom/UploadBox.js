@@ -8,11 +8,11 @@ const Dragger = Upload.Dragger;
 class UploadBox extends BaseComponent {
 
     render() {
-        const {onResult} = this.props;
+        const {onResult,url} = this.props;
         const props = {
             name: 'file',
             multiple: true,
-            action: this.props.url,
+            action: url,
             onChange(info) {
                 const status = info.file.status;
                 if (status !== 'uploading') {
