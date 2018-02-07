@@ -4,7 +4,7 @@ import axios from "axios"
 
 export class QiNiu {
     static initUpload(id,tokenUrl,cb = {}){
-        return  axios.get(tokenUrl).then((token)=>{
+        return  axios.get(tokenUrl).then((token={})=>{
             window.Qiniu.uploader({
                 filters : {
                     mime_types: [
