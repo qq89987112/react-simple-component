@@ -21,10 +21,10 @@ export default class AutoCompleteWrapper extends React.Component {
                     dataSource:array
                 });
             })
-        },1000)
+        },300)
     }
 
-    onSelect(key){
+    onSelect = (key)=>{
         let {onSelect} = this.props;
 
         onSelect&&onSelect(this.state.dataSource[key]);
