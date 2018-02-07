@@ -16,9 +16,9 @@ export default class AutoCompleteWrapper extends React.Component {
         clearTimeout(this.timeout);
         setTimeout(()=>{
             onSearch&&onSearch(value).then(data=>{
-                const array = data.map(item=>item[dataIndex]);
+                this.array = data;
                 this.setState({
-                    dataSource:array
+                    dataSource:data.map(item=>item[dataIndex])
                 });
             })
         },300)
@@ -27,7 +27,7 @@ export default class AutoCompleteWrapper extends React.Component {
     onSelect = (key)=>{
         let {onSelect} = this.props;
 
-        onSelect&&onSelect(this.state.dataSource[key]);
+        onSelect&&onSelect((this.array||[])[key]);
     }
 
     render() {
