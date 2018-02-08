@@ -16,11 +16,11 @@ function beforeUpload(file) {
             message.error('Image must smaller than 2MB!');
         }
     }else{
-        message.error('只能上传 JPG|PNG|JPEG 格式的文件');
+        message.error('please upload JPG|PNG|JPEG ');
     }
     return false
 }
-
+// props limit:num
 class AvatarUploader extends React.Component {
     state = {
         loading: false,
@@ -56,6 +56,7 @@ class AvatarUploader extends React.Component {
                 action="//jsonplaceholder.typicode.com/posts/"
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
+                style={{maxWidth:125,maxHeight:125}}
             >
                 {imageUrl ? <img src={imageUrl} alt="" /> : uploadButton}
             </Upload>
