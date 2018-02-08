@@ -13,10 +13,17 @@ export default class SelectWrapper extends React.Component {
     }
 
     componentWillMount(){
-        const { request } = this.props;
+        let { request,defaultValue,keyIndex } = this.props;
         request&&request().then(list=>{
+            if(defaultValue&&keyIndex){
+                const value = list.find(item=>item[keyIndex]===defaultValue);
+                defaultValue = list.indexOf(value);
+            }
+
+
             this.setState({
-                list
+                list,
+                defaultValue
             })
         })
     }
@@ -38,7 +45,7 @@ export default class SelectWrapper extends React.Component {
         let dataSource = this.getData();
 
         return (
-            <Select style={{ width: 120 }} onChange={this.onChange} {...rest}>
+            <Select  style={{ width: 120 }} onChange={this.onChange} {...rest}>
                 {
                     dataSource.map((item,index)=><Option key={index} value={index}>{item[dataIndex]}</Option>)
                 }
