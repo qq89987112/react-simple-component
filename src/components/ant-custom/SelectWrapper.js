@@ -19,6 +19,9 @@ export default class SelectWrapper extends React.Component {
             if(defaultValue&&keyIndex){
                 const value = list.find(item=>item[keyIndex]===defaultValue);
                 defaultValue = list.indexOf(value);
+                defaultValue = defaultValue===-1 ? undefined :defaultValue;
+            }else{
+                defaultValue = undefined
             }
 
 
