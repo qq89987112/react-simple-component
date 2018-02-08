@@ -13,6 +13,7 @@ export default class SelectWrapper extends React.Component {
     }
 
     componentWillMount(){
+        //判断是否有dataSource 和 request 来选择性loaded
         let { request,defaultValue,keyIndex } = this.props;
         request&&request().then(list=>{
             if(defaultValue&&keyIndex){
@@ -23,7 +24,8 @@ export default class SelectWrapper extends React.Component {
 
             this.setState({
                 list,
-                defaultValue
+                defaultValue,
+                loaded:true
             })
         })
     }
@@ -41,15 +43,19 @@ export default class SelectWrapper extends React.Component {
 
 
     render() {
-        let { dataIndex,onChange,...rest } = this.props;
+        let { dataIndex,defaultValue,onChange,...rest } = this.props;
+        let {loaded} = this.state;
         let dataSource = this.getData();
 
         return (
-            <Select  style={{ width: 120 }} onChange={this.onChange} {...rest}>
-                {
-                    dataSource.map((item,index)=><Option key={index} value={index}>{item[dataIndex]}</Option>)
-                }
-            </Select>
+            <span>{
+                loaded&&<Select defaultValue={this.state.defaultValue} style={{ width: 120 }} onChange={this.onChange} {...rest}>
+                    {
+                        dataSource.map((item,index)=><Option key={index} value={index}>{item[dataIndex]}</Option>)
+                    }
+                </Select>
+            }</span>
+
         )
     }
 }
