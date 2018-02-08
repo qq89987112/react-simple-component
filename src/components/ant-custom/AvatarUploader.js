@@ -1,5 +1,6 @@
 import { Upload, Icon, message } from 'antd';
 import React from "react"
+import axios from "axios"
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -26,16 +27,24 @@ class AvatarUploader extends React.Component {
         loading: false,
     };
     handleChange = (info) => {
+        const {onInput = ()=>{}} = this.props;
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
             return;
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl => this.setState({
+
+            // getBase64(info.file.originFileObj, imageUrl => this.setState({
+            //     imageUrl,
+            //     loading: false,
+            // }));
+            let imageUrl = info.file.response.data.picUrl;
+            this.setState({
                 imageUrl,
-                loading: false,
-            }));
+                loading: false
+            })
+            onInput(imageUrl);
         }
     }
     render() {
@@ -53,12 +62,11 @@ class AvatarUploader extends React.Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="//jsonplaceholder.typicode.com/posts/"
+                action={`${axios.defaults.baseURL}/api/base/UploadFile`}
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
-                style={{maxWidth:125,maxHeight:125}}
             >
-                {imageUrl ? <img src={imageUrl} alt="" /> : uploadButton}
+                {imageUrl ? <img style={{maxWidth:125,maxHeight:125}} src={imageUrl} alt="" /> : uploadButton}
             </Upload>
         );
     }
