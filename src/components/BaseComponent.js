@@ -163,7 +163,7 @@ class BaseComponent extends React.Component {
 
     //form表单相关
     $formCheck(...params) {
-        this.formCheck(params,this.__form_value__);
+        return this.formCheck(params,this.__form_value__);
     }
 
 
