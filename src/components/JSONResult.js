@@ -15,7 +15,8 @@ const TreeNode = Tree.TreeNode;
 //
 // axios.interceptors.response.use(result => {
 //     let config = result.config;
-//     let data = result.data.data;
+//     result = result.data;
+//     let data = result.data;
 //     if(result.errCode ===0){
 //         return RequestHook.onResponce(data,config);
 //     }else{
@@ -26,6 +27,7 @@ const TreeNode = Tree.TreeNode;
 //     console.table(error);
 //     return Promise.reject(error)
 // });
+
 
 export class RequestHook{
 
