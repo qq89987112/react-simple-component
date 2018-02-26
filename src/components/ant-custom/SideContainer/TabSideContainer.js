@@ -4,6 +4,7 @@ import {Layout, Menu, Button, Dropdown,Tabs} from 'antd'
 import './css/SideContainer.scss'
 import {Link,Route} from 'react-router-dom'
 import BaseComponent from "../BaseComponent";
+import PropTypes from 'prop-types'
 
 const {Header, Content, Sider} = Layout,
     MenuItem = Menu.Item,
@@ -12,15 +13,11 @@ const {Header, Content, Sider} = Layout,
 // 注意父路由不能写 exact
 export default class TabSideContainer extends BaseComponent {
 
-    static instance = null;
 
-    static getInstance(){
-        return TabSideContainer.instance;
+    static contextTypes ={
+        router:PropTypes.object.isRequired,
     }
 
-    componentWillMount(){
-        TabSideContainer.instance = this;
-    }
 
     _add = (title,component,key)=>{
         console.log(key);
@@ -31,7 +28,9 @@ export default class TabSideContainer extends BaseComponent {
     }
 
     _change = (activeKey)=>{
-        this.setState({ activeKey });
+        if (this.state.activeKey !== activeKey) {
+            this.setState({ activeKey });
+        }
     }
 
     _remove = (targetKey)=>{
@@ -60,6 +59,7 @@ export default class TabSideContainer extends BaseComponent {
     }
 
     change = (activeKey)=>{
+        this.stopAdd = true;
         this._change(activeKey);
     }
 
@@ -67,14 +67,14 @@ export default class TabSideContainer extends BaseComponent {
 
     // 应该是一个通过key remove的方法，key默认为index应该是该方法的语法糖。
     remove =  (targetKey) => {
+        // this.context.router.history.goBack();
+        this.stopAdd = true;
         this._remove(targetKey);
     }
 
     render() {
         let
-            {side, content = [],type} = this.props,
-            language = this.state.language;
-        content = content.map(item => () =>item);
+            {side, content = [],type} = this.props;
 
         const
             hookRoutes = [],
@@ -88,9 +88,15 @@ export default class TabSideContainer extends BaseComponent {
                     } else {
                         const Hook = createReactClass({
                             componentDidMount(){
-                                setTimeout(()=>{
-                                    self.add(child.title,child.component);
-                                },0)
+                                if (self.stopAdd) {
+                                    self.stopAdd = false;
+                                }else{
+                                    setTimeout(()=>{
+                                        // add里setState了，从而刷新Route，而Route会触发 Hook组件的componentDidMount
+                                        self.add(child.title,child.component);
+                                    },0)
+                                }
+
                             },
                             render(){
                                 //占坑用的。
@@ -102,7 +108,10 @@ export default class TabSideContainer extends BaseComponent {
                         return child.visibility !== false && <MenuItem item={child}><Link to={child.path}>{child.title}</Link></MenuItem>
                     }
                 } ).filter(i=>i)
-            };
+            },
+            menus = renderMenuChildren(side);
+        // 哪里一直在触发刷新
+        // debugger
 
         return (
             <Layout className={['side-container',type]}>
@@ -113,7 +122,7 @@ export default class TabSideContainer extends BaseComponent {
                         // this.add(item.title,item.component)
                     }}>
                         {
-                            renderMenuChildren(side)
+                            menus
                         }
                     </Menu>
                 </Sider>
