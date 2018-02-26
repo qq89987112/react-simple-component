@@ -19,11 +19,11 @@ export default class TabSideContainer extends BaseComponent {
     }
 
 
-    _add = (title,component,key)=>{
+    _add = (title,component,key,props)=>{
         console.log(key);
         const
             panes = this.state.panes || []
-        panes.push({ title,component,key});
+        panes.push({ title,component,key,props});
         this.setState({ panes, activeKey:key});
     }
 
@@ -46,7 +46,7 @@ export default class TabSideContainer extends BaseComponent {
         this.setState({ panes, activeKey });
     }
 
-    add = (title,component) => {
+    add = (title,component,props={}) => {
         const
             panes = this.state.panes || [],
             // 不能使用外部变量储存，必须即时计算。
@@ -55,11 +55,10 @@ export default class TabSideContainer extends BaseComponent {
         if(pane){
             return this.change(pane.key);
         }
-        this._add(title,component,""+((+(panes[panes.length-1]||{}).key||0)+1))
+        this._add(title,component,""+((+(panes[panes.length-1]||{}).key||0)+1),props)
     }
 
     change = (activeKey)=>{
-        this.stopAdd = true;
         this._change(activeKey);
     }
 
@@ -93,7 +92,13 @@ export default class TabSideContainer extends BaseComponent {
                                 }else{
                                     setTimeout(()=>{
                                         // add里setState了，从而刷新Route，而Route会触发 Hook组件的componentDidMount
-                                        self.add(child.title,child.component);
+                                        let title = child.title;
+                                        title = typeof title === 'string' ? title : title.key;
+                                        if (!title) {
+                                            console.error("请指定key！");
+                                            return;
+                                        }
+                                        self.add(title,child.component,this.props);
                                     },0)
                                 }
 
@@ -131,12 +136,13 @@ export default class TabSideContainer extends BaseComponent {
                         <Content className="side-content">
                             {<Tabs
                                 hideAdd
+                                onTabClick={()=>this.stopAdd = true}
                                 onChange = {(activeKey) => this.setState({ activeKey })}
                                 activeKey={this.state.activeKey}
                                 type="editable-card"
                                 onEdit={(targetKey, action) =>this[action](targetKey)}
                             >
-                                {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane className='tab-panel' tab={pane.title} key={pane.key}>{<pane.component/>}</Tabs.TabPane>)}
+                                {(this.state.panes||[]).map((pane,index) => <Tabs.TabPane className='tab-panel' tab={pane.title} key={pane.key}>{<pane.component {...pane.props}  />}</Tabs.TabPane>)}
                             </Tabs>
                             }
                             {/*用于存放路由钩子*/}

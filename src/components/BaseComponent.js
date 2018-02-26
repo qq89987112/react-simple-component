@@ -192,6 +192,10 @@ class BaseComponent extends React.Component {
 
     }
 
+    $setFormValue(form={}){
+        this.__form_value__ = form;
+    }
+
     $setInputValue = (name, value) => {
         const
             form = this.__form_value__;
