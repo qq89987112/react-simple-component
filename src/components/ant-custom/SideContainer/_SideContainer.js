@@ -82,7 +82,7 @@ export default class SideContainer extends BaseComponent {
         }
         return (
             <Layout className={['side-container',type]}>
-                <Sider collapsible>
+                <Sider className='sider-menu-box' collapsible>
                     <div className="logo"/>
                     <Menu theme='dark' className='side-menu' mode="inline" onClick={({item})=>{
                         item = item.props.item;

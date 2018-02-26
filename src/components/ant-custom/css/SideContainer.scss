@@ -15,6 +15,12 @@
     }
   }
 
+  .ant-layout-sider{
+    .ant-layout-sider-children{
+      overflow-y: auto;
+    }
+  }
+
   .side-menu{
     .anticon{
       font-size: 16px;
