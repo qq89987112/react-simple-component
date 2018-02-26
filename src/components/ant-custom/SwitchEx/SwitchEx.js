@@ -8,15 +8,11 @@ export default class SwitchEx extends BaseComponent {
     render() {
         let { onCheck = Promise.resolve,onUncheck = Promise.resolve,...rest} = this.props;
         const {checked} = this.state;
-        return <Switch checked={checked}  onChange={checked=>{
+        return <Switch  loading={this.$isLoading('loading')} checked={checked}  onChange={checked=>{
             let promise;
-            if(checked){
-                promise = onCheck()
-            }else{
-                promise = onUncheck()
-            }
-
-            promise.then(()=>{
+            promise = checked ? onCheck : onUncheck;
+            this.$load('loading');
+            promise().then(()=>{
                 this.setState({
                     checked
                 })
@@ -24,7 +20,7 @@ export default class SwitchEx extends BaseComponent {
                 this.setState({
                     checked:!checked
                 })
-            })
+            }).then(()=>this.$cancel('loading'))
         }
         } {...rest} />
     }
