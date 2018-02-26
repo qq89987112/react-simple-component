@@ -2,6 +2,9 @@
         await this.setState({type: 'forget'})
         formUtils.validateFields()
 
+# hook路由的做法
+    1、写一个空的Route组件,在component的生命周期中写js代码。
+
 # react的网页报错点击后可以在webstorm中打开相应位置。。。。
 
 # webstorm中运行一直处于compile请换git bash运行一次查看报错。

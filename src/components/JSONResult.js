@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {Form, Input, Tree,Button} from 'antd'
 import 'antd/dist/antd.css';
 import ModalWrapper from "./Base/ModalWrapper";
-
 const TreeNode = Tree.TreeNode;
 
+
+// import {message} from "antd"
 // axios.interceptors.request.use(function (config) {
 //     return RequestHook.onRequest(config);
 // }, function (error) {
@@ -12,20 +13,22 @@ const TreeNode = Tree.TreeNode;
 //     return Promise.reject(error);
 // });
 //
-// axios.interceptors.response.use(data => {
-//     let config = data.config;
-//     if(/\.json$/.test(config.url)){
-//         return data.data;
+// axios.interceptors.response.use(result => {
+//     let config = result.config;
+//     result = result.data;
+//     let data = result.data;
+//     if(result.errCode ===0){
+//         return RequestHook.onResponce(data,config);
+//     }else{
+//         message.error(result.errMsg);
+//         return Promise.reject(result)
 //     }
-//     data = data.data.data;
-//     // if (data.pageError || !data.status) {
-//     //     return Promise.reject(data);
-//     // }
-//     return RequestHook.onResponce(data,config);
 // }, error => {
 //     console.table(error);
 //     return Promise.reject(error)
 // });
+
+
 export class RequestHook{
 
     static interceptResponce = new Map();

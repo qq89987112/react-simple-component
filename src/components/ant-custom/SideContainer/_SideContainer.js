@@ -1,16 +1,15 @@
 import React from 'react';
 import {Layout, Menu, Button, Dropdown,Tabs} from 'antd'
-import './css/SideContainer.scss'
+import '../css/SideContainer.scss'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import BaseComponent from "../BaseComponent";
+import BaseComponent from "../../BaseComponent";
 
 const {Header, Content, Sider} = Layout,
     MenuItem = Menu.Item,
     SubMenu  = Menu.SubMenu ;
 
-
-class SideContainer extends BaseComponent {
+export default class SideContainer extends BaseComponent {
     state = {
         activeIndex: 0,
         language:localStorage.getItem('language')||"zh-cn"
@@ -25,8 +24,8 @@ class SideContainer extends BaseComponent {
         console.log(key);
         const
             panes = this.state.panes || []
-            panes.push({ title,component,key});
-            this.setState({ panes, activeKey:key});
+        panes.push({ title,component,key});
+        this.setState({ panes, activeKey:key});
     }
 
     _change = (activeKey)=>{
@@ -52,10 +51,10 @@ class SideContainer extends BaseComponent {
             // 不能使用外部变量储存，必须即时计算。
             // added = this.added = this.added || {},
             pane = panes.find(pane=>pane.title===title);
-            if(pane){
-                return this.change(pane.key);
-            }
-            this._add(title,component,""+((+(panes[panes.length-1]||{}).key||0)+1))
+        if(pane){
+            return this.change(pane.key);
+        }
+        this._add(title,component,""+((+(panes[panes.length-1]||{}).key||0)+1))
     }
 
     change = (activeKey)=>{
@@ -67,20 +66,20 @@ class SideContainer extends BaseComponent {
 
     // 应该是一个通过key remove的方法，key默认为index应该是该方法的语法糖。
     remove =  (targetKey) => {
-         this._remove(targetKey);
+        this._remove(targetKey);
     }
 
     render() {
         let
             {side, content = [],type} = this.props,
             language = this.state.language;
-            content = content.map(item => () =>item);
+        content = content.map(item => () =>item);
 
-            const renderMenuChildren = (children)=>{
-                return children.map((child, index) => child.children ? <SubMenu title={child.title}>
-                    {renderMenuChildren(child.children)}
-                </SubMenu> : <MenuItem item={child}><span>{child.title}</span></MenuItem>)
-            }
+        const renderMenuChildren = (children)=>{
+            return children.map((child, index) => child.children ? <SubMenu title={child.title}>
+                {renderMenuChildren(child.children)}
+            </SubMenu> : <MenuItem item={child}><span>{child.title}</span></MenuItem>)
+        }
         return (
             <Layout className={['side-container',type]}>
                 <Sider collapsible>
@@ -96,22 +95,22 @@ class SideContainer extends BaseComponent {
                     </Menu>
                 </Sider>
                 <Layout>
-                        {/*<Header className='side-content-header'>*/}
-                            {/*<Button onClick={()=>{*/}
-                                {/*this.context.setLanguage(language = language==='zh-cn'?'en':'zh-cn');*/}
-                                {/*this.setState({*/}
-                                    {/*language*/}
-                                {/*})*/}
-                            {/*}}>{language==='zh-cn' ? 'English' : "简体中文"}</Button>*/}
-                            {/*<Dropdown overlay={<Menu>*/}
-                                {/*<MenuItem><Link to="/login/reset">{this.$f("password.edit")}</Link></MenuItem>*/}
-                                {/*<MenuItem><a onClick={(e)=>{*/}
-                                    {/*e.preventDefault();*/}
-                                    {/*localStorage.setItem(consts.AUTH,"");*/}
-                                    {/*this.context.router.history.push("/login")*/}
-                                {/*}}>{this.$f("logout")}</a></MenuItem>*/}
-                            {/*</Menu>}><Button>Clouds</Button></Dropdown>*/}
-                        {/*</Header>*/}
+                    {/*<Header className='side-content-header'>*/}
+                    {/*<Button onClick={()=>{*/}
+                    {/*this.context.setLanguage(language = language==='zh-cn'?'en':'zh-cn');*/}
+                    {/*this.setState({*/}
+                    {/*language*/}
+                    {/*})*/}
+                    {/*}}>{language==='zh-cn' ? 'English' : "简体中文"}</Button>*/}
+                    {/*<Dropdown overlay={<Menu>*/}
+                    {/*<MenuItem><Link to="/login/reset">{this.$f("password.edit")}</Link></MenuItem>*/}
+                    {/*<MenuItem><a onClick={(e)=>{*/}
+                    {/*e.preventDefault();*/}
+                    {/*localStorage.setItem(consts.AUTH,"");*/}
+                    {/*this.context.router.history.push("/login")*/}
+                    {/*}}>{this.$f("logout")}</a></MenuItem>*/}
+                    {/*</Menu>}><Button>Clouds</Button></Dropdown>*/}
+                    {/*</Header>*/}
                     <div className='side-content-wrapper'>
                         <Content className="side-content">
                             {
@@ -133,5 +132,3 @@ class SideContainer extends BaseComponent {
         )
     }
 }
-
-export default SideContainer
