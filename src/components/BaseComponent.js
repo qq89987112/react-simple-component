@@ -82,13 +82,13 @@ class BaseComponent extends React.Component {
         }
     }
 
-    wrapLoadMoreEx(api,name,params){
+    wrapLoadMoreEx(api,name,params,{auto=true}={}){
             const
                 context = this,
                 loadingWrapper = this.wrapLoading(api, name, name),
                 loadingMoreWrapper = this.wrapLoadMore(loadingWrapper, params);
-            return loadingMoreWrapper.reLoad().then((data) => {
-                    context[name+"LoadMore"] = loadingMoreWrapper;
+                context[name+"LoadMore"] = loadingMoreWrapper;
+            return auto&&loadingMoreWrapper.reLoad().then((data) => {
                     context.setState({
                         [`${name}Pagi`]: {
                             total: data.totalCount,
