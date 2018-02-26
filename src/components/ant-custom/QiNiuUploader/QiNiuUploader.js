@@ -90,7 +90,7 @@ export class QiNiu {
 }
 
 // props onInput  type reeligible defaultUrl addOn
-export default class Uploader extends React.Component {
+export default class QiNiuUploader extends React.Component {
     state = {
         loading: false,
         id: new Date().getTime() / Math.random(),
