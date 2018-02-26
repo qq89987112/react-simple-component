@@ -19,12 +19,13 @@
     />)
 
 ## TabSideContainer
- <SideContainer
+ <TabSideContainer
         side={[
         // 为了实现通过路径即可访问相应的页面，需要提供一个path属性
-            {path:'/hello',title:'你好',component:App},
+            {title:'你好',component:App,visible:false},
             {title:'你好2',children:[
                     {title:'你好3',component:App},
                 ]},
         ]}
     />
+
