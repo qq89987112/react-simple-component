@@ -3,7 +3,7 @@ import {Popover,Form,Input,Button} from 'antd'
 import BaseComponent from "../BaseComponent";
 
 
-export default class QuickPropover extends BaseComponent {
+export default class InputPopover extends BaseComponent {
 
     render() {
         let { onSubmit,title,text } = this.props;
@@ -25,7 +25,16 @@ export default class QuickPropover extends BaseComponent {
                     <Form.Item><Button htmlType='submit' type='primary' loading={this.$isLoading('submit')}>确定</Button>
                     </Form.Item>
                 </Form>} trigger="click">
-                <Button>{text}</Button>
+                {
+                    (()=>{
+                        if(text instanceof Function){
+                            return text();
+                        }else{
+                            return <Button>{text}</Button>
+                        }
+                    })()
+                }
+
             </Popover>
         )
     }

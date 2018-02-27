@@ -6,7 +6,7 @@ import BaseComponent from "../BaseComponent";
 export default class SwitchEx extends BaseComponent {
 
     render() {
-        let { onCheck = Promise.resolve,onUncheck = Promise.resolve,...rest} = this.props;
+        let { onCheck = Promise.resolve,onUncheck = Promise.resolve,onChange= ()=>{},...rest} = this.props;
         const {checked} = this.state;
         return <Switch  loading={this.$isLoading('loading')} checked={checked}  onChange={checked=>{
             let promise;
@@ -20,7 +20,10 @@ export default class SwitchEx extends BaseComponent {
                 this.setState({
                     checked:!checked
                 })
-            }).then(()=>this.$cancel('loading'))
+            }).then(()=>{
+                onChange(this.state.checked);
+                this.$cancel('loading')
+            })
         }
         } {...rest} />
     }

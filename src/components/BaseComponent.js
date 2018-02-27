@@ -82,23 +82,36 @@ class BaseComponent extends React.Component {
         }
     }
 
+    wrapReadLoad(api,name,params,loadingName){
+        loadingName&&this.$load(loadingName);
+        return api(params).then(data=>{
+            loadingName&&this.$cancel(loadingName);
+            let loadMore = this[`${name}LoadMore`];
+            loadMore&&loadMore.reLoadPage();
+            return data;
+        })
+    }
+
     wrapLoadMoreEx(api,name,params,{auto=true}={}){
-            const
-                context = this,
-                loadingWrapper = this.wrapLoading(api, name, name),
-                loadingMoreWrapper = this.wrapLoadMore(loadingWrapper, params);
-                context[name+"LoadMore"] = loadingMoreWrapper;
-            return auto&&loadingMoreWrapper.reLoad().then((data) => {
-                    context.setState({
-                        [`${name}Pagi`]: {
-                            total: data.totalCount,
-                            onChange: (page, pageSize) => setTimeout(() => loadingMoreWrapper.loadPage(page), 0)
-                        },
-                        [`${name}Reload`]: loadingMoreWrapper.reLoad
-                    })
-                    return data;
-                }
-            )
+        const
+            context = this,
+            loadingWrapper = this.wrapLoading(api, name, name),
+            loadingMoreWrapper = this.wrapLoadMore(loadingWrapper, params),
+            reLoad = loadingMoreWrapper.reLoad;
+
+        loadingMoreWrapper.reLoad = ()=>{
+            return reLoad().then((data) => {
+                context.setState({
+                    [`${name}Pagi`]: {
+                        total: data.totalCount,
+                        onChange: (page, pageSize) => setTimeout(() => loadingMoreWrapper.loadPage(page), 0)
+                    }
+                })
+                return data;
+            })
+        }
+        context[name+"LoadMore"] = loadingMoreWrapper;
+        return auto&&loadingMoreWrapper.reLoad()
     }
 
 
