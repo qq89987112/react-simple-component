@@ -13,6 +13,7 @@ class UploadBox extends BaseComponent {
             name: 'file',
             multiple: true,
             action: url,
+            showUploadList:false,
             onChange(info) {
                 const status = info.file.status;
                 if (status !== 'uploading') {
@@ -20,7 +21,7 @@ class UploadBox extends BaseComponent {
                 }
                 if (status === 'done') {
                     // message.success(`${info.file.name} file uploaded successfully.`);
-                    onResult&&onResult(info);
+                    onResult&&onResult(info,info.file.response);
                 } else if (status === 'error') {
                     message.error(`${info.file.name} file upload failed.`);
                 }
