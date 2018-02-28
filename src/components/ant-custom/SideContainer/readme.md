@@ -1,5 +1,5 @@
 ## type='router'
-(<SideContainer
+(<RouteSideContainer
         side={
             [
                 <Link className='menu-item' to={match.url}><i className="anticon icon-home"/><FormattedMessage id='home' /></Link>,
