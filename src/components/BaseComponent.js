@@ -99,8 +99,8 @@ class BaseComponent extends React.Component {
             loadingMoreWrapper = this.wrapLoadMore(loadingWrapper, params),
             reLoad = loadingMoreWrapper.reLoad;
 
-        loadingMoreWrapper.reLoad = ()=>{
-            return reLoad().then((data) => {
+        loadingMoreWrapper.reLoad = (...params)=>{
+            return reLoad(...params).then((data) => {
                 context.setState({
                     [`${name}Pagi`]: {
                         total: data.totalCount,
