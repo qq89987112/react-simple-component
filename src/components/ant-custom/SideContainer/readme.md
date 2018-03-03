@@ -1,5 +1,5 @@
 ## type='router'
-(<SideContainer
+(<RouteSideContainer
         side={
             [
                 <Link className='menu-item' to={match.url}><i className="anticon icon-home"/><FormattedMessage id='home' /></Link>,
@@ -22,7 +22,7 @@
  <TabSideContainer
         side={[
         // 为了实现通过路径即可访问相应的页面，需要提供一个path属性
-            {path="asdf",title:'你好',component:App,visibility:false},
+            {key='',path="asdf",title:'你好',component:App,visibility:false},
             {title:'你好2',children:[
                     {title:'你好3',component:App},
                 ]},
