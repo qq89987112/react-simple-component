@@ -36,7 +36,8 @@ export class QiNiu {
 
                         if (/^audio/i.test(file.type)) {
                             //这个catch为了过拦截器
-                            sourceUrl = sourceUrl.replace(/^(http:)|(https:)/,"")
+                            // 小程序不能对没有协议的地址自动补充相应协议，所以注释掉。
+                            // sourceUrl = sourceUrl.replace(/^(http:)|(https:)/,"")
                             promise = axios.get(`${sourceUrl}?avinfo`).catch(data=>data).then(data=>{
                                 let
                                     value = data.format.duration,
