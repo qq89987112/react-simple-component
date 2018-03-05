@@ -1,6 +1,6 @@
 /* eslint-disable no-duplicate-case */
 import React from 'react';
-import {Form, Input, Checkbox, Button, Modal} from "antd";
+import {Form, Input, Checkbox, Button, Modal,message} from "antd";
 import BaseComponent from "../components/BaseComponent";
 import FormUtils from "../components/ant-custom/FormUtils";
 import validator from "../js/validator";
@@ -30,7 +30,7 @@ class LoginForm extends BaseComponent {
             //登录成功后保存相关信息
             let history = this.props.history;
             history.push('/home');
-        })
+        }).catch(data=>message.error(data.errMsg)).then(()=>this.$cancel('login'))
     }
 
 
