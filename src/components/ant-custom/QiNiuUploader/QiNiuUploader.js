@@ -9,8 +9,8 @@ export class QiNiu {
                 filters : {
                     mime_types: [
                         // {title: "flv files", extensions: "flv"}, // 限定flv后缀上传格式上传
-                        {title: "Video files", extensions: "mp3"}, // 限定flv,mpg,mpeg,avi,wmv,mov,asf,rm,rmvb,mkv,m4v,mp4后缀格式上传
-                        {title: "Image files", extensions: "jpg,gif,png"}, // 限定jpg,gif,png后缀上传
+                        // {title: "Video files", extensions: "mp3"}, // 限定flv,mpg,mpeg,avi,wmv,mov,asf,rm,rmvb,mkv,m4v,mp4后缀格式上传
+                        // {title: "Image files", extensions: "jpg,gif,png"}, // 限定jpg,gif,png后缀上传
                         // {title: "Zip files", extensions: "zip"} // 限定zip后缀上传
                     ]
                 },
