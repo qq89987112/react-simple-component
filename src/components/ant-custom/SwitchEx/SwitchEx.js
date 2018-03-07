@@ -1,6 +1,6 @@
 import React from 'react';
 import {Switch} from 'antd'
-import BaseComponent from "../BaseComponent";
+import BaseComponent from "../../BaseComponent";
 
 
 export default class SwitchEx extends BaseComponent {
