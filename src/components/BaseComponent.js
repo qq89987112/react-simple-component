@@ -98,7 +98,7 @@ class BaseComponent extends React.Component {
             loadingWrapper = this.wrapLoading(api, name, name),
             loadingMoreWrapper = this.wrapLoadMore(loadingWrapper, params),
             reLoad = loadingMoreWrapper.reLoad,
-            pageSize = params.rows||10;
+            pageSize = params&&params.rows||10;
 
         loadingMoreWrapper.reLoad = (...params)=>{
             return reLoad(...params).then((data) => {
