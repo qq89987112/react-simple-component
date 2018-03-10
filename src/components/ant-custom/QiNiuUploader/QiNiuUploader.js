@@ -3,16 +3,19 @@ import React from "react"
 import axios from "axios"
 
 export class QiNiu {
-    static initUpload(id,tokenUrl,cb = {}){
+    static initUpload(id,tokenUrl,cb = {},{fileType}){
         return  axios.get(tokenUrl).then((token={})=>{
             window.Qiniu.uploader({
                 filters : {
+                    // 只能写一个筛选，不然就变成 自定义文件 。
                     mime_types: [
-                        // {title: "flv files", extensions: "flv"}, // 限定flv后缀上传格式上传
-                        // {title: "Video files", extensions: "mp3"}, // 限定flv,mpg,mpeg,avi,wmv,mov,asf,rm,rmvb,mkv,m4v,mp4后缀格式上传
-                        // {title: "Image files", extensions: "jpg,gif,png"}, // 限定jpg,gif,png后缀上传
-                        // {title: "Zip files", extensions: "zip"} // 限定zip后缀上传
-                    ]
+                        fileType==='flv'&&{title: "flv files", extensions: "flv"}, // 限定flv后缀上传格式上传
+                        fileType==='video'&&{title: "Video files", extensions: "flv,mpg,mpeg,avi,wmv,mov,asf,rm,rmvb,mkv,m4v,mp4"}, // 限定flv,mpg,mpeg,avi,wmv,mov,asf,rm,rmvb,mkv,m4v,mp4后缀格式上传
+                        fileType==='image'&&{title: "Image files", extensions: "jpg,gif,png"}, // 限定jpg,gif,png后缀上传
+                        fileType==='zip'&&{title: "Zip files", extensions: "zip"}, // 限定zip后缀上传
+                        fileType==='pdf'&&{title: "pdf files", extensions: "pdf"},
+                        fileType==='mp4'&&{title: "pdf files", extensions: "mp4"},
+                    ].filter(i=>i)
                 },
                 runtimes: 'html5,flash,html4', //上传模式,依次退化
                 browse_button: id+"", //上传选择的点选按钮，**必需**
@@ -104,7 +107,8 @@ export default class QiNiuUploader extends React.Component {
     }
 
     initUpload(){
-        QiNiu.initUpload(this.state.id, "/api/admin/pub/GetQiniuPictureToken", {
+        const {type = 'image',tokenUrl=''} = this.props;
+        QiNiu.initUpload(this.state.id, tokenUrl, {
             FileUploaded:(res,options)=>{
                 const onInput = this.props.onInput;
                 // if (/^audio/i.test(options.file.type)) {
@@ -123,6 +127,8 @@ export default class QiNiuUploader extends React.Component {
                     loading: true
                 })
             }
+        },{
+            fileType:type
         })
     }
 

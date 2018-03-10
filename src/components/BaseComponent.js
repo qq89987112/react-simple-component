@@ -97,13 +97,15 @@ class BaseComponent extends React.Component {
             context = this,
             loadingWrapper = this.wrapLoading(api, name, name),
             loadingMoreWrapper = this.wrapLoadMore(loadingWrapper, params),
-            reLoad = loadingMoreWrapper.reLoad;
+            reLoad = loadingMoreWrapper.reLoad,
+            pageSize = params&&params.rows||10;
 
         loadingMoreWrapper.reLoad = (...params)=>{
             return reLoad(...params).then((data) => {
                 context.setState({
                     [`${name}Pagi`]: {
                         total: data.totalCount,
+                        pageSize,
                         onChange: (page, pageSize) => setTimeout(() => loadingMoreWrapper.loadPage(page), 0)
                     }
                 })
