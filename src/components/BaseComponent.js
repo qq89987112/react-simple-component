@@ -228,7 +228,7 @@ class BaseComponent extends React.Component {
             )
         }
         else {
-            return names ? form[names] || form;
+            return names ? form[names] : form;
         }
     }
 
