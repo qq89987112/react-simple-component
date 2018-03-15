@@ -12,7 +12,7 @@ const TreeNode = Tree.TreeNode;
 *
 *   }} />
 * */
-export class MTree extends React.Component {
+export class SyncTree extends React.Component {
     state = {
         treeData: [],
     }
