@@ -34,7 +34,7 @@ class ModalWrapper extends BaseAntPage {
 
     static $showNew = (reactNodeFunc,props) => {
         let
-            $new = ModalWrapper.$new(props),
+            $new = ModalWrapper.$new({...{mask:false},...props}),
             _close = $new.close;
             $new.close = ()=>_close({destory:true});
         return $new.show(reactNodeFunc);
