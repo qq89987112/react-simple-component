@@ -1,3 +1,7 @@
+# react-redux
+- reducer中dispatch的正确做法是：
+    因为 dispatch 的最终目的是为了更改其他reducer里的state,而redux和vuex不一样，每一个reducer都可以获取到dispatch，只要在相应的reducer里对相应的action以及store进行判断即可。
+
 # react $nextTick的正确用法
         await this.setState({type: 'forget'})
         formUtils.validateFields()
