@@ -1,11 +1,11 @@
 import React from 'react';
 import {Modal} from 'antd'
 import ReactDOM from 'react-dom';
-import BaseAntPage from "../BaseComponent";
+import BaseComponent from "../BaseComponent";
 
 // 使用方式为
 // this.$showModal(({resolve,reject,params,form})=><div></div>).then((result)=>{})
-class ModalWrapper extends BaseAntPage {
+class ModalWrapper extends BaseComponent {
 
 
     static instance;
