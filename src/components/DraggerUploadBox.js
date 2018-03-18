@@ -3,11 +3,9 @@ import {Upload, Icon, message} from 'antd';
 import axios from "axios"
 
 
-function beforeUpload(file) {
-    return true;
-}
 
-export default class UploadBox extends React.Component {
+
+export default class DraggerUploadBox extends React.Component {
     state = {
         loading: false,
     };
@@ -44,13 +42,9 @@ export default class UploadBox extends React.Component {
 
         let viewUrl = url || defaultUrl; //用于显示的视图url
         return (
-            <Upload
+            <Upload.Dragger
                 name="file"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
                 action={actionUrl}
-                beforeUpload={beforeUpload}
                 onChange={this.handleChange}
             >
                 {
@@ -65,9 +59,9 @@ export default class UploadBox extends React.Component {
                             }
                         </div>) ||
                     //没有就上传
-                    <Icon type='plus'/>
+                    <Icon type='inbox'/>
                 }
-            </Upload>
+            </Upload.Dragger>
         );
     }
 }

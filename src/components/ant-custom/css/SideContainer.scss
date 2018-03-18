@@ -26,6 +26,9 @@
       font-size: 16px;
       display: inline-block;
       margin-right: 20px;
+      &:before{
+        font-family: 'iconfont'!important;
+      }
     }
   }
   .side-content-header{
@@ -33,11 +36,12 @@
     text-align: right;
   }
   .side-content-wrapper{
-    padding: 10px;
+    padding: 20px 10px;
     height: 100%;
     background-color: #f4f4f4;
 
     .side-content{
+      padding: 20px;
       overflow-y: auto;
       height: 100%;
       background-color: #fff;

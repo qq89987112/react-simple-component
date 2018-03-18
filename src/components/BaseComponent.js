@@ -74,7 +74,7 @@ class BaseComponent extends React.Component {
                         }
                         return data;
                     });
-            },
+            }
             //  并不需要,直接loadNext拿到报错即可
             // isLoaded(){
             //   return _isLoaded;
@@ -101,10 +101,17 @@ class BaseComponent extends React.Component {
             pageSize = params&&params.rows||10;
 
         loadingMoreWrapper.reLoad = (...params)=>{
+            let pagi = context.state[`${name}Pagi`];
+            if (pagi) {
+                pagi.current = 1;
+                context.setState({
+                    [`${name}Pagi`]: pagi
+                })
+            }
             return reLoad(...params).then((data) => {
                 context.setState({
                     [`${name}Pagi`]: {
-                        total: data.totalCount,
+                        total: +data.totalCount,
                         pageSize,
                         onChange: (page, pageSize) => setTimeout(() => loadingMoreWrapper.loadPage(page), 0)
                     }
