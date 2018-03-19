@@ -39,9 +39,11 @@ export default class SelectWrapper extends React.Component {
     }
 
     getData = ()=>{
-        let { dataSource=[] } = this.props;
+        let { dataSource=[],placeholder,dataIndex } = this.props;
         const { list } = this.state;
-        return dataSource = list || dataSource || [];
+        dataSource = list || dataSource || [];
+        // return [{[dataIndex]:placeholder||""},...dataSource];
+        return [{[dataIndex]:"all"},...dataSource];
     }
 
 
@@ -54,7 +56,7 @@ export default class SelectWrapper extends React.Component {
             <span>{
                 loaded&&<Select defaultValue={this.state.defaultValue} style={{ width: 120 }} onChange={this.onChange} {...rest}>
                     {
-                        dataSource.map((item,index)=><Option key={index} value={index}>{item[dataIndex]}</Option>)
+                        dataSource.map((item,index)=><Option title={item[dataIndex]} key={index} value={index}>{item[dataIndex]}</Option>)
                     }
                 </Select>
             }</span>
