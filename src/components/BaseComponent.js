@@ -88,7 +88,7 @@ class BaseComponent extends React.Component {
             let loadMore = this[`${name}LoadMore`];
             loadMore&&loadMore.reLoadPage();
             return data;
-        }).catch(()=>{}).then(()=>loadingName&&this.$cancel(loadingName);)
+        }).catch(()=>{}).then(()=>loadingName&&this.$cancel(loadingName))
     }
 
     wrapLoadMoreEx(api,name,params,{auto=true}={}){
