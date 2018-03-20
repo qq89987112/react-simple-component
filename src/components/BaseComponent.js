@@ -85,11 +85,10 @@ class BaseComponent extends React.Component {
     wrapReadLoad(api,name,params,loadingName){
         loadingName&&this.$load(loadingName);
         return api(params).then(data=>{
-            loadingName&&this.$cancel(loadingName);
             let loadMore = this[`${name}LoadMore`];
             loadMore&&loadMore.reLoadPage();
             return data;
-        })
+        }).catch(()=>{}).then(()=>loadingName&&this.$cancel(loadingName);)
     }
 
     wrapLoadMoreEx(api,name,params,{auto=true}={}){
