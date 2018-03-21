@@ -43,7 +43,7 @@ export default class SelectWrapper extends React.Component {
         const { list } = this.state;
         dataSource = list || dataSource || [];
         // return [{[dataIndex]:placeholder||""},...dataSource];
-        return [{[dataIndex]:"all"},...dataSource];
+        return [{[dataIndex]:"unset"},...dataSource];
     }
 
 
