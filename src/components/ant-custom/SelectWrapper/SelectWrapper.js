@@ -39,11 +39,11 @@ export default class SelectWrapper extends React.Component {
     }
 
     getData = ()=>{
-        let { dataSource=[],placeholder,dataIndex } = this.props;
+        let { dataSource=[],placeholder,dataIndex,defaultText } = this.props;
         const { list } = this.state;
         dataSource = list || dataSource || [];
         // return [{[dataIndex]:placeholder||""},...dataSource];
-        return [{[dataIndex]:"unset"},...dataSource];
+        return [{[dataIndex]:defaultText||"unset"},...dataSource];
     }
 
 
