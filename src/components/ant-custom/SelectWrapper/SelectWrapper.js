@@ -20,7 +20,8 @@ export default class SelectWrapper extends BaseComponent {
             if(defaultValue&&keyIndex){
                 const value = list.find(item=>item[keyIndex]===defaultValue);
                 defaultValue = list.indexOf(value);
-                defaultValue = defaultValue===-1 ? undefined :defaultValue;
+                // +1是因为多了一个unset选项
+                defaultValue = defaultValue===-1 ? undefined :defaultValue+1;
             }else{
                 defaultValue = undefined
             }
@@ -35,6 +36,8 @@ export default class SelectWrapper extends BaseComponent {
     }
 
     onChange = (v)=>{
+        // 为了避免自己触发的改变还会再次在render里触发。
+        this.lastValue = v;
         let {onChange} = this.props;
         onChange&&onChange(this.getData()[v]);
     }
@@ -56,6 +59,14 @@ export default class SelectWrapper extends BaseComponent {
         if (value && keyIndex) {
             const tempValue = list.find(item=>item[keyIndex]===value);
             value = list.indexOf(tempValue);
+            // +1是因为多了一个unset选项
+            value = value===-1 ? undefined :value+1;
+            //为了监听外部对value变量的更新，及时触发改变。
+            if (value !== this.lastValue) {
+                this.onChange(value);
+
+                // this.lastValue=value;
+            }
         }
 
 

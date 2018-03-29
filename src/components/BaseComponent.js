@@ -7,6 +7,7 @@ class BaseComponent extends React.Component {
 
     wrapLoadingCache = new Map();
 
+    __form_value__ = {}
     //=========wrap 相关 开始
     // 当api返回的data并不是列表时,应该在api函数里的then中作调整
     wrapLoading(apiFunc, loadingName, stateName) {
@@ -188,7 +189,6 @@ class BaseComponent extends React.Component {
     }
 
 
-    __form_value__ = {}
     $onInput = (name, realTime) => {
         const type = Object.prototype.toString.call(name);
         switch (type) {
@@ -233,8 +233,10 @@ class BaseComponent extends React.Component {
                 }, {}
             )
         }
-        else {
+        else if(names) {
             return names ? form[names] : form;
+        }else{
+            return form;
         }
     }
 
