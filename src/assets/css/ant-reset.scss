@@ -7,9 +7,11 @@
     white-space: nowrap;
   }
 }
-
-.anticon.i {
-  &:before {
-    font-family: 'iconfont' !important;
+.iconfont-box{
+  i.anticon {
+    &:before {
+      font-family: 'iconfont' !important;
+    }
   }
 }
+
