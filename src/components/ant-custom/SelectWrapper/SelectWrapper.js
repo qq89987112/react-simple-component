@@ -64,15 +64,16 @@ export default class SelectWrapper extends BaseComponent {
             //为了监听外部对value变量的更新，及时触发改变。
             if (value !== this.lastValue) {
                 this.onChange(value);
-
                 // this.lastValue=value;
             }
         }
 
+        value = JSON.parse(JSON.stringify({value}))
+
 
         return (
             <span>{
-                loaded&&<Select defaultValue={this.state.defaultValue} style={{ width: 120 }} value={value} onChange={this.onChange} {...rest}>
+                loaded&&<Select defaultValue={this.state.defaultValue} style={{ width: 120 }} onChange={this.onChange} {...{...value,...rest}}>
                     {
                         dataSource.map((item,index)=><Option title={item[dataIndex]} key={index} value={index}>{item[dataIndex]}</Option>)
                     }
