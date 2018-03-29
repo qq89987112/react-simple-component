@@ -1,12 +1,13 @@
 import React from 'react';
 import {Select,Input} from 'antd'
+import BaseComponent from "./BaseAntPage";
 
 const
     Option = Select.Option;
 
 
 
-export default class SelectWrapper extends React.Component {
+export default class SelectWrapper extends BaseComponent {
 
     state = {
         list:undefined
@@ -39,22 +40,28 @@ export default class SelectWrapper extends React.Component {
     }
 
     getData = ()=>{
-        let { dataSource=[],placeholder,dataIndex,defaultText } = this.props;
+        let { dataSource=[],placeholder,dataIndex } = this.props;
         const { list } = this.state;
         dataSource = list || dataSource || [];
         // return [{[dataIndex]:placeholder||""},...dataSource];
-        return [{[dataIndex]:defaultText||"unset"},...dataSource];
+        return [{[dataIndex]:this.$f("nothing")},...dataSource];
     }
 
 
     render() {
-        let { dataIndex,defaultValue,onChange,...rest } = this.props;
-        let {loaded} = this.state;
+        let { dataIndex,defaultValue,onChange,value,keyIndex,...rest } = this.props;
+        let {loaded,list} = this.state;
         let dataSource = this.getData();
+
+        if (value && keyIndex) {
+            const tempValue = list.find(item=>item[keyIndex]===value);
+            value = list.indexOf(tempValue);
+        }
+
 
         return (
             <span>{
-                loaded&&<Select defaultValue={this.state.defaultValue} style={{ width: 120 }} onChange={this.onChange} {...rest}>
+                loaded&&<Select defaultValue={this.state.defaultValue} style={{ width: 120 }} value={value} onChange={this.onChange} {...rest}>
                     {
                         dataSource.map((item,index)=><Option title={item[dataIndex]} key={index} value={index}>{item[dataIndex]}</Option>)
                     }
