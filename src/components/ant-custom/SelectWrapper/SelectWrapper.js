@@ -38,7 +38,15 @@ export default class SelectWrapper extends BaseComponent {
         // 为了避免自己触发的改变还会再次在render里触发。
         this.lastValue = v;
         let {onChange} = this.props;
-        onChange && onChange(this.getData()[v]);
+        let result;
+        //避免 当指定了 dataIndex 且 在onChange拿到的也是dataIndex (一般情况下dataIndex是title,onChange拿到的是id),就会拿到nothing
+        if(v===0){
+            result= {};
+        }else{
+            result= this.getData()[v];
+        }
+
+        onChange && onChange(result);
     }
 
     getData = () => {
