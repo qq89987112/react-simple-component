@@ -16,6 +16,9 @@ export default class AutoCompleteWrapper extends React.Component {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(()=>{
             onSearch&&onSearch(value).then(data=>{
+                //清空用户之前的选择项
+                let {onSelect} = this.props;
+                onSelect&&onSelect({});
                 this.array = data;
                 this.setState({
                     dataSource:data.map(item=>item[dataIndex])
