@@ -60,7 +60,7 @@ export default class SelectWrapper extends BaseComponent {
 
     render() {
         let {dataIndex, defaultValue, onChange, value, keyIndex, ...rest} = this.props;
-        let {loaded, list} = this.state;
+        let {loaded, list=[]} = this.state;
         let dataSource = this.getData();
 
         if (value && keyIndex) {
