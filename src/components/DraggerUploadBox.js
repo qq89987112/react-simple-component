@@ -11,18 +11,31 @@ export default class DraggerUploadBox extends React.Component {
     };
     handleChange = (info) => {
         let file = info.file;
+        const data = file.response;
         if (file.status === 'uploading') {
             this.setState({loading: true});
             return;
         }
         if (file.status === 'done') {
             const {onInput,onResponse} = this.props;
-            const data = file.response;
-            let fileUrl = `${axios.defaults.baseURL || ""}${data.data.fileUrl}`;
-            onResponse&&onResponse(data);
-            onInput && onInput(fileUrl);
+            if (data.errCode !== 0) {
+                message.error(data.errMsg);
+            }else{
+                let fileUrl = `${axios.defaults.baseURL || ""}${data.data.fileUrl}`;
+                onResponse&&onResponse(data);
+                onInput && onInput(fileUrl);
+                this.setState({
+                    url: fileUrl
+                })
+            }
+
             this.setState({
-                url: fileUrl,
+                loading:false
+            })
+        }
+        if (file.status === 'error') {
+            message.error(data.errMsg);
+            this.setState({
                 loading:false
             })
         }
