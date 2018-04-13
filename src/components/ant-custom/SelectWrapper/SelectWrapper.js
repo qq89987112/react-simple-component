@@ -1,6 +1,7 @@
 import React from 'react';
-import {Select, Input} from 'antd'
+import {Select, Icon,Input} from 'antd'
 import BaseComponent from "./BaseAntPage";
+import "./SelectWrapper.scss"
 
 const
     Option = Select.Option;
@@ -59,7 +60,7 @@ export default class SelectWrapper extends BaseComponent {
 
 
     render() {
-        let {dataIndex, defaultValue, onChange, value, keyIndex, ...rest} = this.props;
+        let {dataIndex, defaultValue, onChange, value, keyIndex,showClose = false,onClose=()=>{}, ...rest} = this.props;
         let {loaded, list} = this.state;
         let dataSource = this.getData();
 
@@ -77,14 +78,20 @@ export default class SelectWrapper extends BaseComponent {
 
         value = JSON.parse(JSON.stringify({value}))
 
-
         return (
             <span>{
                 loaded && <Select defaultValue={this.state.defaultValue} style={{width: 120}}
                                   onChange={this.onChange} {...{...value, ...rest}}>
                     {
-                        dataSource.map((item, index) => <Option title={item[dataIndex]} key={index}
-                                                                value={index}>{item[dataIndex]}</Option>)
+                        dataSource.map((item, index) =>
+                            <Option
+                                title={item[dataIndex]}
+                                key={index}
+                                value={index}>
+
+                                {item[dataIndex]}
+                                {showClose&&index!==0&&<Icon style={{float:"right"}} type="close-circle-o" onClick={()=>onClose(item,index)} />}
+                            </Option>)
                     }
                 </Select>
             }</span>
