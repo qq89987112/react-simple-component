@@ -10,7 +10,7 @@ const
 export default class SelectWrapper extends BaseComponent {
 
     state = {
-        list: []
+        list: undefined
     }
 
     componentWillMount() {
@@ -61,15 +61,16 @@ export default class SelectWrapper extends BaseComponent {
 
     render() {
         let {dataIndex, defaultValue, onChange, value, keyIndex,showClose = false,onClose=()=>{}, ...rest} = this.props;
-        let {loaded, list} = this.state;
+        let {loaded} = this.state;
         let dataSource = this.getData();
 
+        //为了监听外部对value变量的更新，及时触发改变。
         if (value && keyIndex) {
-            const tempValue = list.find(item => item[keyIndex] === value);
-            value = list.indexOf(tempValue);
+            const tempValue = dataSource.find(item => item[keyIndex] === value);
+            value = dataSource.indexOf(tempValue);
             // +1是因为多了一个unset选项
-            value = value === -1 ? undefined : value + 1;
-            //为了监听外部对value变量的更新，及时触发改变。
+            // value = value === -1 ? undefined : value + 1;
+
             if (value !== this.lastValue) {
                 this.onChange(value);
                 // this.lastValue=value;
