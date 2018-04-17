@@ -10,7 +10,7 @@ const
 export default class SelectWrapper extends BaseComponent {
 
     state = {
-        list: undefined
+        list: []
     }
 
     componentWillMount() {
@@ -63,6 +63,7 @@ export default class SelectWrapper extends BaseComponent {
         let {dataIndex, defaultValue, onChange, value, keyIndex,showClose = false,onClose=()=>{}, ...rest} = this.props;
         let {loaded, list} = this.state;
         let dataSource = this.getData();
+
         if (value && keyIndex) {
             const tempValue = list.find(item => item[keyIndex] === value);
             value = list.indexOf(tempValue);
