@@ -58,6 +58,7 @@ class BaseComponent extends React.Component {
             },
             // 这个主要功能是当通过筛选reLoad后,保存筛选条件进行分页
             loadPage(page){
+                _page = page;
                 _params.pageNum = page;
                 _params.pageSize = _rows;
                 return apiFunc(_params);
