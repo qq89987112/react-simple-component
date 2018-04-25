@@ -184,6 +184,10 @@ class BaseComponent extends React.Component {
     }
 
     //form表单相关
+    //
+    // 多条件判断可以写多个
+    //  ['nameTitle',v=>v,"请指定姓名"],
+    //  ['nameTitle',v=>v.length<20,"姓名不能大于20个字符"],
     $formCheck(...params) {
         return this.formCheck(params,this.__form_value__);
     }
