@@ -51,11 +51,11 @@ export default class SelectWrapper extends BaseComponent {
     }
 
     getData = () => {
-        let {dataSource = [], placeholder, dataIndex} = this.props;
+        let {dataSource = [], placeholder, dataIndex,unSelectText=this.$f("nothing")} = this.props;
         const {list} = this.state;
         dataSource = list || dataSource || [];
         // return [{[dataIndex]:placeholder||""},...dataSource];
-        return [{[dataIndex]: this.$f("nothing")}, ...dataSource];
+        return [{[dataIndex]: unSelectText}, ...dataSource];
     }
 
 
